@@ -4,12 +4,17 @@
   "description": "Node.js Circuit Breaker Pattern",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:lint": "node_modules/eslint/bin/eslint.js ./  || exit 0"
   },
   "author": "Alex Wolden",
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.10.0",
     "promisify-node": "^0.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^2.7.0",
+    "eslint-config-airbnb": "^7.0.0"
   }
 }
