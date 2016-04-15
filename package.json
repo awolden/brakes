@@ -15,7 +15,7 @@
     "circuit-breaker",
     "circuitbreaker",
     "hysterix"
-  ]
+  ],
   "author": "Alex Wolden <awolden@gmail.com>",
   "license": "ISC",
   "dependencies": {
