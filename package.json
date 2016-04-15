@@ -19,12 +19,12 @@
   "author": "Alex Wolden <awolden@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "chai-things": "^0.2.0",
     "lodash": "^4.10.0",
     "promisify-node": "^0.4.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-things": "^0.2.0",
     "coveralls": "^2.11.9",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^7.0.0",

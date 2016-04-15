@@ -1,0 +1,7 @@
+test/
+.eslintignore
+.eslintrc
+.istanbul.yml
+.jsbeautifyrc
+.travis.yml
+.nvmrc
