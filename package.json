@@ -1,6 +1,6 @@
 {
   "name": "brakes",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Node.js Circuit Breaker Pattern",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,14 @@
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- $(find . -name '*.spec.js')",
     "coveralls": "cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
-  "author": "Alex Wolden",
+  "keywords": [
+    "circuit",
+    "breaker",
+    "circuit-breaker",
+    "circuitbreaker",
+    "hysterix"
+  ]
+  "author": "Alex Wolden <awolden@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "chai-things": "^0.2.0",
