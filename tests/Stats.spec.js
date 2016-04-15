@@ -78,7 +78,7 @@ describe('Stats Class', () => {
     stats.startSnapshots();
     stats.stopSnapshots();
     expect(stats._snapshotInterval).to.equal(undefined);
-    //test 2nd call
+    // test 2nd call
     expect(stats.stopSnapshots()).to.equal(false);
   });
   it('Generate Blank Stats', () => {

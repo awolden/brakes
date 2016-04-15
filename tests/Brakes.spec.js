@@ -4,7 +4,6 @@ const Brakes = require('../lib/Brakes');
 const expect = require('chai').expect;
 const consts = require('../lib/consts');
 const EventEmitter = require('events').EventEmitter;
-const Stats = require('../lib/Stats');
 const sinon = require('sinon');
 const TimeOutError = require('../lib/TimeOutError');
 
@@ -31,8 +30,8 @@ const nopr = function nopr(foo, err) {
     else resolve(foo);
   });
 };
-const slowpr = function slowpr(foo, err) {
-  return new Promise((resolve, reject) => {
+const slowpr = function slowpr(foo) {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve(foo);
     }, 50);
@@ -40,7 +39,7 @@ const slowpr = function slowpr(foo, err) {
 };
 
 const fbpr = function fallback(foo, err) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve(foo || err);
   });
 };
@@ -55,7 +54,7 @@ describe('Brakes Class', () => {
     // const statsSpy = sinon.spy(brake, '_startStatsCheck');
     // expect(snapshotSpy.calledOnce).to.equal(true);
     // expect(statsSpy.calledOnce).to.equal(true);
-    //expect(brake._stats).to.be.instanceof(Stats);
+    // expect(brake._stats).to.be.instanceof(Stats);
     expect(brake._opts).to.deep.equal(defaultOptions);
   });
   it('Should be promisify the service func', () => {
