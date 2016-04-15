@@ -19,6 +19,7 @@ reporting:
     print: summary
     reports:
         - lcov
+        - html
     dir: ./coverage
     watermarks:
         statements: [50, 80]

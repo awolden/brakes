@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node_modules/.bin/_mocha  $(find . -name '*.spec.js')",
     "test:lint": "node_modules/eslint/bin/eslint.js ./  || exit 0",
-    "coverage": "node_modules/.bin/istanbul cover --report html node_modules/.bin/_mocha -- $(find . -name '*.spec.js')"
+    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- $(find . -name '*.spec.js')",
+    "coveralls": "cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "author": "Alex Wolden",
   "license": "ISC",
@@ -17,6 +18,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^7.0.0",
     "istanbul": "^0.4.3",

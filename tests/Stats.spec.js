@@ -64,10 +64,8 @@ describe('Stats Class', () => {
     expect(stats._stopBucketSpinning()).to.equal(false);
   });
   it('Should start stats snapshotting', (done) => {
-    const stats = new Stats({
-      statInterval: 10
-    });
-    stats.startSnapshots();
+    const stats = new Stats();
+    stats.startSnapshots(10);
     const spy = sinon.spy(stats, '_snapshot');
     setTimeout(() => {
       expect(spy.calledOnce).to.equal(true);
