@@ -124,7 +124,10 @@ Based on the `opts.statInterval` an event will be fired at regular intervals tha
 // ...
 ```
 
- 
+
+
+
+
 
 Copyright (c) 2016, Alexander Wolden
 
