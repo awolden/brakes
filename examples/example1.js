@@ -8,7 +8,7 @@ let iterations = 0;
 function unreliableServiceCall() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      iterations++
+      iterations++;
       if (iterations === 10) {
         successRate = 0.6;
       }

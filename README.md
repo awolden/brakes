@@ -1,6 +1,9 @@
 # brakes
 [![Dependency Status](https://david-dm.org/awolden/brakes.svg)](https://david-dm.org/awolden/brakes)
 [![Build Status](https://travis-ci.org/awolden/brakes.svg?branch=master)](https://travis-ci.org/awolden/brakes)
+[![Coverage Status](https://coveralls.io/repos/github/awolden/brakes/badge.svg?branch=master)](https://coveralls.io/github/awolden/brakes?branch=master)
+[![npm version](https://badge.fury.io/js/brakes.svg)](https://badge.fury.io/js/brakes)
+[![Code Climate](https://codeclimate.com/github/awolden/brakes/badges/gpa.svg)](https://codeclimate.com/github/awolden/brakes)
 
 A circuit breaker pattern for node.js.
 
@@ -82,6 +85,14 @@ A circuit breaker pattern for node.js.
       console.error(`error: ${err}`);
     });
 ```
+
+### Demonstration
+
+For a terminal based demonstration:
+
+`npm install && node examples/example1.js`
+
+
 
 ## Events
   Every brake is an instance of `EventEmitter` that provides the following events:
