@@ -4,7 +4,7 @@ const Brakes = require('../lib/Brakes');
 const expect = require('chai').expect;
 const consts = require('../lib/consts');
 const EventEmitter = require('events').EventEmitter;
-const Stats = require('../lib/stats')
+const Stats = require('../lib/Stats');
 const sinon = require('sinon');
 const TimeOutError = require('../lib/TimeOutError');
 

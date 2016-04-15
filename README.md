@@ -1,5 +1,7 @@
 # brakes
 [![Dependency Status](https://david-dm.org/awolden/brakes.svg)](https://david-dm.org/awolden/brakes)
+[![Build Status](https://travis-ci.org/awolden/brakes.svg?branch=master)](https://travis-ci.org/awolden/brakes)
+
 A circuit breaker pattern for node.js.
 
 - [Examples](#examples)
