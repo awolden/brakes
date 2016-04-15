@@ -4,7 +4,7 @@ instrumentation:
     extensions:
         - .js
     default-excludes: true
-    excludes: ['node_modules', '.git', '.config']
+    excludes: ['node_modules/', 'example1.js']
     embed-source: false
     variable: __coverage__
     compact: true
