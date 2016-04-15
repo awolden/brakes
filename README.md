@@ -1,4 +1,5 @@
 # brakes
+[![Dependency Status](https://david-dm.org/awolden/brakes.svg)](https://david-dm.org/awolden/brakes)
 A circuit breaker pattern for node.js.
 
 - [Examples](#examples)
