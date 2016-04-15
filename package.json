@@ -1,8 +1,12 @@
 {
   "name": "brakes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node.js Circuit Breaker Pattern",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/awolden/brakes.git"
+  }
   "scripts": {
     "test": "node_modules/.bin/_mocha  $(find . -name '*.spec.js')",
     "test:lint": "node_modules/eslint/bin/eslint.js ./  || exit 0",
