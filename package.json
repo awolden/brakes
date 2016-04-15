@@ -6,7 +6,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/awolden/brakes.git"
-  }
+  },
   "scripts": {
     "test": "node_modules/.bin/_mocha  $(find . -name '*.spec.js')",
     "test:lint": "node_modules/eslint/bin/eslint.js ./  || exit 0",
