@@ -23,7 +23,6 @@
   "author": "Alex Wolden <awolden@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.10.0",
     "promisify-node": "^0.4.0"
   },
   "devDependencies": {
