@@ -2,7 +2,6 @@
 
 const Bucket = require('../lib/Bucket');
 const expect = require('chai').expect;
-const consts = require('../lib/consts');
 
 describe('Bucket Class', () => {
   let bucket;
