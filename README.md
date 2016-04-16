@@ -7,6 +7,8 @@
 
 A circuit breaker pattern for node.js.
 
+**Requires Node 4.2.0 or higher**
+
 [http://martinfowler.com/bliki/CircuitBreaker.html](http://martinfowler.com/bliki/CircuitBreaker.html)
 
 [https://github.com/Netflix/Hystrix/wiki/How-it-Works](https://github.com/Netflix/Hystrix/wiki/How-it-Works)
