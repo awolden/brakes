@@ -4,6 +4,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/awolden/brakes/badge.svg?branch=master)](https://coveralls.io/github/awolden/brakes?branch=master)
 [![npm version](https://badge.fury.io/js/brakes.svg)](https://badge.fury.io/js/brakes)
 [![Code Climate](https://codeclimate.com/github/awolden/brakes/badges/gpa.svg)](https://codeclimate.com/github/awolden/brakes)
+[![bitHound Overall Score](https://www.bithound.io/github/awolden/brakes/badges/score.svg)](https://www.bithound.io/github/awolden/brakes)
 
 A circuit breaker pattern for node.js.
 
