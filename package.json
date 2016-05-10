@@ -23,7 +23,7 @@
   "author": "Alex Wolden <awolden@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "promisify-node": "^0.4.0"
+    "bluebird": "^3.3.5"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -31,6 +31,8 @@
     "coveralls": "^2.11.9",
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^7.0.0",
+    "eslint-plugin-jsx-a11y": "^1.2.0",
+    "eslint-plugin-react": "^5.1.1",
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3"

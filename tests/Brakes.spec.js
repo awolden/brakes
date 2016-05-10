@@ -22,7 +22,7 @@ const noop = function noop(foo, err, cb) {
     cb = err;
     err = null;
   }
-  cb(err, foo);
+  cb(err ? new Error(err) : null, foo);
 };
 const nopr = function nopr(foo, err) {
   return new Promise((resolve, reject) => {
@@ -37,7 +37,6 @@ const slowpr = function slowpr(foo) {
     }, 50);
   });
 };
-
 const fbpr = function fallback(foo, err) {
   return new Promise((resolve) => {
     resolve(foo || err);
@@ -57,16 +56,17 @@ describe('Brakes Class', () => {
     // expect(brake._stats).to.be.instanceof(Stats);
     expect(brake._opts).to.deep.equal(defaultOptions);
   });
-  it('Should be promisify the service func', () => {
+  it('Should promisify the service func', () => {
     const brake = new Brakes(noop);
     return brake._serviceCall('test').then((result) => {
       expect(result).to.equal('test');
     });
   });
-  it('Should be promisify and reject service func', () => {
+  it('Should promisify and reject service func', () => {
     const brake = new Brakes(noop);
     return brake._serviceCall(null, 'err').then(null, (err) => {
-      expect(err).to.equal('err');
+      expect(err).to.be.instanceof(Error);
+      expect(err.message).to.equal('err');
     });
   });
   it('Should accept a promise', () => {
@@ -114,7 +114,8 @@ describe('Brakes Class', () => {
     const spy = sinon.spy(() => {});
     brake.on('failure', spy);
     return brake.exec(null, 'err').then(null, err => {
-      expect(err).to.equal('err');
+      expect(err).to.be.instanceof(Error);
+      expect(err.message).to.equal('err');
       expect(spy.calledOnce).to.equal(true);
     });
   });
@@ -148,7 +149,8 @@ describe('Brakes Class', () => {
     const brake = new Brakes(nopr);
     brake.fallback(noop);
     return brake.exec(null, 'err').then(null, err => {
-      expect(err).to.equal('err');
+      expect(err).to.be.instanceof(Error);
+      expect(err.message).to.equal('err');
     });
   });
   it('Fallback should succeed', () => {
