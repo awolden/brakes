@@ -26,7 +26,7 @@ const noop = function noop(foo, err, cb) {
 };
 const nopr = function nopr(foo, err) {
   return new Promise((resolve, reject) => {
-    if (err) reject(err);
+    if (err) reject(new Error(err));
     else resolve(foo);
   });
 };
@@ -78,7 +78,8 @@ describe('Brakes Class', () => {
   it('Should reject a promise', () => {
     const brake = new Brakes(nopr);
     return brake._serviceCall(null, 'err').then(null, (err) => {
-      expect(err).to.equal('err');
+      expect(err).to.be.instanceof(Error);
+      expect(err.message).to.equal('err');
     });
   });
   it('Throw an error if not passed a function', () => {
@@ -157,6 +158,7 @@ describe('Brakes Class', () => {
     const brake = new Brakes(nopr);
     brake.fallback(fbpr);
     return brake.exec(null, 'thisShouldFailFirstCall').then(result => {
+      console.log(result, result.stack)
       expect(result).to.equal('thisShouldFailFirstCall');
     });
   });
