@@ -158,7 +158,6 @@ describe('Brakes Class', () => {
     const brake = new Brakes(nopr);
     brake.fallback(fbpr);
     return brake.exec(null, 'thisShouldFailFirstCall').then(result => {
-      console.log(result, result.stack)
       expect(result).to.equal('thisShouldFailFirstCall');
     });
   });
