@@ -23,8 +23,14 @@ describe('CircuitBrokenError', () => {
       successful: 40
     };
     const mockThreshold = 0.5;
-    expect(new CircuitBrokenError(mockTotals, mockThreshold)).to.have.a.property('message').that.is.a('string');
-    expect(new CircuitBrokenError(mockTotals, mockThreshold)).to.have.a.property('totals').that.is.an('object');
+    const error = new CircuitBrokenError(mockTotals, mockThreshold);
+    expect(error).to.have.a.property('message').that.is.a('string');
+    expect(error).to.have.a.property('totals').that.is.an('object');
+    expect(error).to.have.a.property('totals').that.is.an('object');
+    expect(error.totals).to.have.a.property('failed');
+    expect(error.totals).to.have.a.property('timedOut');
+    expect(error.totals).to.have.a.property('total');
+    expect(error.totals).to.have.a.property('successful');
   });
   it('Should have expected error string with calculated failure percentage', () => {
     const mockTotals = {
