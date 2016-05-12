@@ -154,6 +154,27 @@ Based on the `opts.statInterval` an event will be fired at regular intervals tha
 // ...
 ```
 
+<<<<<<< HEAD
+** Example Stats Object **
+
+```javascript
+  { failed: 14,
+    timedOut: 0,
+    total: 202,
+    successful: 188,
+    percentiles:
+     { '0': 100,
+       '1': 107,
+       '0.25': 102,
+       '0.5': 104,
+       '0.75': 105,
+       '0.9': 105,
+       '0.95': 106,
+       '0.99': 107,
+       '0.995': 107 }
+  }
+```
+=======
 ## Development
 
 We gladly welcome pull requests and code contributions. To develop brakes locally clone the repo and use the following commands to aid in development:
@@ -166,6 +187,7 @@ npm run coverage
 ```
 
 ---
+>>>>>>> e9429516f54a345a8e82f90452b2340dc6c43d0d
 
 Copyright (c) 2016
 
