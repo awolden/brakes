@@ -11,6 +11,7 @@ const sinon = require('sinon');
 const defaultOptions = {
   bucketSpan: 1000,
   bucketNum: 60,
+  percentiles: [0.0, 0.25, 0.50, 0.75, 0.90, 0.95, 0.99, 0.995, 1],
   statInterval: 1200
 };
 
@@ -27,6 +28,7 @@ describe('Stats Class', () => {
     const overrides = {
       bucketSpan: 2000,
       bucketNum: 30,
+      percentiles: [0.50],
       statInterval: 2400
     };
     const stats = new Stats(overrides);
@@ -81,6 +83,15 @@ describe('Stats Class', () => {
     // test 2nd call
     expect(stats.stopSnapshots()).to.equal(false);
   });
+  it('Should calculate percentile', () => {
+    const stats = new Stats();
+    const a = [1, 2, 3, 4, 5];
+    expect(stats._calculatePercentile(0, a)).to.equal(1);
+    expect(stats._calculatePercentile(0.25, a)).to.equal(2);
+    expect(stats._calculatePercentile(0.5, a)).to.equal(3);
+    expect(stats._calculatePercentile(0.75, a)).to.equal(4);
+    expect(stats._calculatePercentile(1, a)).to.equal(5);
+  });
   it('Generate Blank Stats', () => {
     const stats = new Stats();
     const buckets = [null, null];
@@ -88,7 +99,18 @@ describe('Stats Class', () => {
       total: 0,
       failed: 0,
       successful: 0,
-      timedOut: 0
+      timedOut: 0,
+      percentiles: {
+        0: 0,
+        1: 0,
+        0.25: 0,
+        0.5: 0,
+        0.75: 0,
+        0.9: 0,
+        0.95: 0,
+        0.99: 0,
+        0.995: 0
+      }
     });
   });
   it('Generate Complete Stats', () => {
@@ -97,23 +119,45 @@ describe('Stats Class', () => {
       new Bucket(),
       new Bucket()
     ];
-    buckets[0].failure();
-    buckets[1].failure();
-    buckets[0].success();
-    buckets[1].success();
-    buckets[0].timeout();
-    buckets[1].timeout();
+    buckets[0].failure(145);
+    buckets[1].failure(234);
+    buckets[0].success(231);
+    buckets[1].success(1234);
+    buckets[0].timeout(432);
+    buckets[1].timeout(12);
     expect(stats._generateStats(buckets)).to.deep.equal({
       total: 6,
       failed: 2,
       successful: 2,
-      timedOut: 2
+      timedOut: 2,
+      percentiles: {
+        0: 12,
+        1: 1234,
+        0.25: 145,
+        0.5: 231,
+        0.75: 432,
+        0.9: 1234,
+        0.95: 1234,
+        0.99: 1234,
+        0.995: 1234
+      }
     });
     expect(stats._totals).to.deep.equal({
       total: 6,
       failed: 2,
       successful: 2,
-      timedOut: 2
+      timedOut: 2,
+      percentiles: {
+        0: 12,
+        1: 1234,
+        0.25: 145,
+        0.5: 231,
+        0.75: 432,
+        0.9: 1234,
+        0.95: 1234,
+        0.99: 1234,
+        0.995: 1234
+      }
     });
   });
   it('_update should emit an event', () => {
@@ -126,60 +170,115 @@ describe('Stats Class', () => {
       total: 0,
       failed: 0,
       successful: 0,
-      timedOut: 0
+      timedOut: 0,
+      percentiles: {
+        0: 0,
+        1: 0,
+        0.25: 0,
+        0.5: 0,
+        0.75: 0,
+        0.9: 0,
+        0.95: 0,
+        0.99: 0,
+        0.995: 0
+      }
     });
   });
   it('Should increment failure and call update', () => {
     const stats = new Stats();
     const spy = sinon.spy(() => {});
     stats.on('update', spy);
-    stats.failure();
+    stats.failure(100);
     expect(spy.calledOnce).to.equal(true);
     expect(spy.firstCall.args[0]).to.deep.equal({
       total: 1,
       failed: 1,
       successful: 0,
-      timedOut: 0
+      timedOut: 0,
+      percentiles: {
+        0: 100,
+        1: 100,
+        0.25: 100,
+        0.5: 100,
+        0.75: 100,
+        0.9: 100,
+        0.95: 100,
+        0.99: 100,
+        0.995: 100
+      }
     });
   });
   it('Should increment success and call update', () => {
     const stats = new Stats();
     const spy = sinon.spy(() => {});
     stats.on('update', spy);
-    stats.success();
+    stats.success(100);
     expect(spy.calledOnce).to.equal(true);
     expect(spy.firstCall.args[0]).to.deep.equal({
       total: 1,
       failed: 0,
       successful: 1,
-      timedOut: 0
+      timedOut: 0,
+      percentiles: {
+        0: 100,
+        1: 100,
+        0.25: 100,
+        0.5: 100,
+        0.75: 100,
+        0.9: 100,
+        0.95: 100,
+        0.99: 100,
+        0.995: 100
+      }
     });
   });
   it('Should increment timedOut and call update', () => {
     const stats = new Stats();
     const spy = sinon.spy(() => {});
     stats.on('update', spy);
-    stats.timeout();
+    stats.timeout(100);
     expect(spy.calledOnce).to.equal(true);
     expect(spy.firstCall.args[0]).to.deep.equal({
       total: 1,
       failed: 0,
       successful: 0,
-      timedOut: 1
+      timedOut: 1,
+      percentiles: {
+        0: 100,
+        1: 100,
+        0.25: 100,
+        0.5: 100,
+        0.75: 100,
+        0.9: 100,
+        0.95: 100,
+        0.99: 100,
+        0.995: 100
+      }
     });
   });
   it('_snapshot should trigger event', () => {
     const stats = new Stats();
     const spy = sinon.spy(() => {});
     stats.on('snapshot', spy);
-    stats.timeout();
+    stats.timeout(100);
     stats._snapshot();
     expect(spy.calledOnce).to.equal(true);
     expect(spy.firstCall.args[0]).to.deep.equal({
       total: 1,
       failed: 0,
       successful: 0,
-      timedOut: 1
+      timedOut: 1,
+      percentiles: {
+        0: 100,
+        1: 100,
+        0.25: 100,
+        0.5: 100,
+        0.75: 100,
+        0.9: 100,
+        0.95: 100,
+        0.99: 100,
+        0.995: 100
+      }
     });
   });
   it('_shiftAndPush should shift and push', () => {
@@ -192,13 +291,25 @@ describe('Stats Class', () => {
     const stats = new Stats();
     const spy = sinon.spy(() => {});
     stats.on('update', spy);
+    stats.timeout(100);
     stats.reset();
-    expect(spy.calledOnce).to.equal(true);
-    expect(spy.firstCall.args[0]).to.deep.equal({
+    expect(spy.calledTwice).to.equal(true);
+    expect(spy.secondCall.args[0]).to.deep.equal({
       total: 0,
       failed: 0,
       successful: 0,
-      timedOut: 0
+      timedOut: 0,
+      percentiles: {
+        0: 0,
+        1: 0,
+        0.25: 0,
+        0.5: 0,
+        0.75: 0,
+        0.9: 0,
+        0.95: 0,
+        0.99: 0,
+        0.995: 0
+      }
     });
   });
 });
