@@ -6,7 +6,7 @@
 [![Code Climate](https://codeclimate.com/github/awolden/brakes/badges/gpa.svg)](https://codeclimate.com/github/awolden/brakes)
 [![bitHound Overall Score](https://www.bithound.io/github/awolden/brakes/badges/score.svg)](https://www.bithound.io/github/awolden/brakes)
 
-A circuit breaker pattern for nodejs. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will fail quickly if a remote system fails to respond. This module is largely based on Netflix's [Hysterix](https://github.com/Netflix/Hystrix)
+A circuit breaker pattern for nodejs. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will trip and internal circuit if it begins to detect that the remote service is beginning to fail. This module is largely based on Netflix's [Hysterix](https://github.com/Netflix/Hystrix)
 
 **Requires Node 4.2.0 or higher**
 
@@ -35,8 +35,9 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
 
   ##### Promisify
 
-  If you pass an async function that relies on callbacks to brakes it will promisify it into a bluebird promise. If you pass a promise to brakes, it will use that promise as is.
+  If you pass an async function that relies on callback, brakes will promisify it into a bluebird promise. If you pass a promise to brakes, it will use that promise as is.
 
+  *Note: brakes will only detect async callback functions that use callbacks with one of the following names: `cb`, `callback`, `callback_`, or `done`.*
 
 ## Examples
 ### Promise
