@@ -25,7 +25,6 @@ describe('CircuitBrokenError', () => {
     const mockThreshold = 0.5;
     const error = new CircuitBrokenError(mockTotals, mockThreshold);
     expect(error).to.have.a.property('message').that.is.a('string');
-    expect(error).to.have.a.property('totals').that.is.an('object');
     expect(error).to.have.a.property('totals').that.is.an('object').that.deep.equals(mockTotals);
   });
   it('Should have expected error string with calculated failure percentage', () => {
