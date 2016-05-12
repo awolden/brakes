@@ -35,11 +35,11 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
 
 ### Bluebird and Promisify
 
-  ##### Bluebird
+  **Bluebird**
 
   This module utilizes bluebird promises. For more on the features of bluebird visit their site: [http://bluebirdjs.com/](http://bluebirdjs.com/). Brakes uses bluebird over native promises in order to provide more feature rich promises and because bluebird offers performance comparable to that of raw callbacks.
 
-  ##### Promisify
+  **Promisify**
 
   If you pass an async function that relies on callback, brakes will promisify it into a bluebird promise. If you pass a promise to brakes, it will use that promise as is.
 
