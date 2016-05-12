@@ -156,7 +156,7 @@ Based on the `opts.statInterval` an event will be fired at regular intervals tha
 
 ## Development
 
-We gladly welcome pull requests and code contributions. To develop brakes locally clone the repo and use the following commands to add in development:
+We gladly welcome pull requests and code contributions. To develop brakes locally clone the repo and use the following commands to aid in development:
 
 ```
 npm install
