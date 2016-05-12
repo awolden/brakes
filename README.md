@@ -1,10 +1,16 @@
-# brakes
 [![Dependency Status](https://david-dm.org/awolden/brakes.svg)](https://david-dm.org/awolden/brakes)
 [![Build Status](https://travis-ci.org/awolden/brakes.svg?branch=master)](https://travis-ci.org/awolden/brakes)
 [![Coverage Status](https://coveralls.io/repos/github/awolden/brakes/badge.svg?branch=master)](https://coveralls.io/github/awolden/brakes?branch=master)
 [![npm version](https://badge.fury.io/js/brakes.svg)](https://badge.fury.io/js/brakes)
 [![Code Climate](https://codeclimate.com/github/awolden/brakes/badges/gpa.svg)](https://codeclimate.com/github/awolden/brakes)
 [![bitHound Overall Score](https://www.bithound.io/github/awolden/brakes/badges/score.svg)](https://www.bithound.io/github/awolden/brakes)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+[![badges](https://img.shields.io/:badges-8/8-32B90E.svg)](https://img.shields.io/:badges-8/8-32B90E.svg)
+
+
+
+brakes
+===
 
 A circuit breaker pattern for nodejs. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will trip and internal circuit if it begins to detect that the remote service is beginning to fail. This module is largely based on Netflix's [Hysterix](https://github.com/Netflix/Hystrix)
 
