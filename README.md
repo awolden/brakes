@@ -134,9 +134,25 @@ Based on the `opts.statInterval` an event will be fired at regular intervals tha
 // ...
 ```
 
+** Example Stats Object **
 
-
-
+```javascript
+  { failed: 14,
+    timedOut: 0,
+    total: 202,
+    successful: 188,
+    percentiles:
+     { '0': 100,
+       '1': 107,
+       '0.25': 102,
+       '0.5': 104,
+       '0.75': 105,
+       '0.9': 105,
+       '0.95': 106,
+       '0.99': 107,
+       '0.995': 107 }
+  }
+```
 
 
 Copyright (c) 2016, Alexander Wolden
