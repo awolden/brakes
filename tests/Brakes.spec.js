@@ -6,6 +6,7 @@ const consts = require('../lib/consts');
 const EventEmitter = require('events').EventEmitter;
 const sinon = require('sinon');
 const TimeOutError = require('../lib/TimeOutError');
+const CircuitBrokenError = require('../lib/CircuitBrokenError');
 
 const defaultOptions = {
   bucketSpan: 1000,
