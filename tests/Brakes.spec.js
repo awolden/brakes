@@ -2,10 +2,10 @@
 
 const Brakes = require('../lib/Brakes');
 const expect = require('chai').expect;
-const consts = require('../lib/consts');
 const EventEmitter = require('events').EventEmitter;
 const sinon = require('sinon');
 const TimeOutError = require('../lib/TimeOutError');
+const CircuitBrokenError = require('../lib/CircuitBrokenError');
 
 const defaultOptions = {
   bucketSpan: 1000,
@@ -135,7 +135,7 @@ describe('Brakes Class', () => {
     const brake = new Brakes(nopr);
     brake._closed = true;
     return brake.exec(null, 'err').then(null, err => {
-      expect(err).to.equal(consts.CIRCUIT_BROKEN);
+      expect(err).to.be.instanceof(CircuitBrokenError);
     });
   });
   it('Should call fallback if circuit is broken', () => {
