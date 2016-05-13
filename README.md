@@ -187,8 +187,6 @@ npm run coverage
 ```
 
 ---
->>>>>>> e9429516f54a345a8e82f90452b2340dc6c43d0d
-
 Copyright (c) 2016
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
