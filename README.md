@@ -154,7 +154,6 @@ Based on the `opts.statInterval` an event will be fired at regular intervals tha
 // ...
 ```
 
-<<<<<<< HEAD
 ** Example Stats Object **
 
 ```javascript
