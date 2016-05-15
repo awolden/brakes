@@ -28,6 +28,7 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
   - [Promise](#promise)
   - [Callback](#callback)
   - [Fallback](#fallback)
+- [Methods](#methods)
 - [Events](#events)
 - [Configuration](#configuration)
 - [Stats](#stats)
@@ -121,6 +122,16 @@ For a terminal based demonstration:
 
 `npm install && node examples/example1.js`
 
+## Methods
+|Method|Argument(s)|Returns|Description|
+|---|---|---|
+|getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker|
+|*static* getGlobalStats|globalStats|N/A|Returns a reference to the global stats tracker|
+|exec|N/A|Promise|Executes the circuit|
+|fallback|function (must return promise or accept callback)|N/A|Registers a fallback function for the circuit|
+|on|eventName, function|N/A|Register an event listener|
+|destroy|N/A|N/A|Removes all listeners and deregisters with global stats tracker.|
+|isOpen|N/A|boolean|Returns `true` if circuit is open|
 
 ## Events
   Every brake is an instance of `EventEmitter` that provides the following events:
@@ -128,18 +139,20 @@ For a terminal based demonstration:
   - **failure**: Event on request failure
   - **success**: Event on request success
   - **timeout**: Event on request timeout
-  - **circuitBroken**: Event fired when circuit is broken
+  - **circuitClosed**: Event fired when circuit is closed
   - **circuitOpen**: Event fired when circuit is open
   - **snapshot**: Event fired on stats snapshot
 
 ## Configuration
   Available configuration options.
+- **name**: `string` to use for name of circuit. This is mostly used for reporting on stats.
+- **group**: `string` to use for group of circuit. This is mostly used for reporting on stats.
 - **bucketSpan**: time in `ms` that a specific bucket should remain active
 - **statInterval**: interval in `ms` that brakes should emit a `snapshot` event
 - **percentiles**: `array<number>` that defines the percentile levels that should be calculated on the stats object (i.e. 0.9 for 90th percentile)
 - **bucketNum**: `#` of buckets to retain in a rolling window
 - **circuitDuration**: time in `ms` that a circuit should remain broken
-- **startDelay**: delay in `ms` before a circuit breaker starts checking health of the circuit
+- **waitThreshold**: `number` of requests to wait before testing circuit health
 - **threshold**: `%` threshold for successful calls. If the % of successful calls dips below this threshold the circuit will break
 - **timeout**: time in `ms` before a service call will timeout
 
@@ -148,32 +161,41 @@ Based on the `opts.statInterval` an event will be fired at regular intervals tha
 
 ```javascript
 // ...
-  brake.on('snapshot', stats => {
-    console.log(`Stats received -> ${stats}`);
+  brake.on('snapshot', snapshot => {
+    console.log(`Stats received -> ${snapshot}`);
   });
 // ...
 ```
 
-** Example Stats Object **
+**Example Stats Object**
 
 ```javascript
-  { failed: 14,
-    timedOut: 0,
-    total: 202,
-    successful: 188,
-    percentiles:
-     { '0': 100,
-       '1': 107,
-       '0.25': 102,
-       '0.5': 104,
-       '0.75': 105,
-       '0.9': 105,
-       '0.95': 106,
-       '0.99': 107,
-       '0.995': 107 }
+{ name: 'defaultBrake',
+  group: 'defaultBrakeGroup',
+  time: 1463297869298,
+  circuitDuration: 15000,
+  threshold: 0.5,
+  waitThreshold: 100,
+  stats:
+   { failed: 0,
+     timedOut: 0,
+     total: 249,
+     latencyMean: 100,
+     successful: 249,
+     percentiles:
+      { '0': 100,
+        '1': 102,
+        '0.25': 100,
+        '0.5': 100,
+        '0.75': 101,
+        '0.9': 101,
+        '0.95': 102,
+        '0.99': 102,
+        '0.995': 102 }
+    }
   }
 ```
-=======
+===
 ## Development
 
 We gladly welcome pull requests and code contributions. To develop brakes locally clone the repo and use the following commands to aid in development:
