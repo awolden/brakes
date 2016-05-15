@@ -248,6 +248,8 @@ describe('Brakes Class', () => {
       expect(statsObj.name).to.equal('brake1');
       expect(statsObj.group).to.equal('brakeGroup1');
       expect(statsObj.time).to.be.a('number');
+      expect(statsObj.threshold).to.equal(defaultOptions.threshold);
+      expect(statsObj.circuitDuration).to.equal(defaultOptions.circuitDuration);
       expect(statsObj.stats).to.deep.equal({
         foo: 'bar'
       });
