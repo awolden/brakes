@@ -43,12 +43,12 @@ brake.on('snapshot', (stats) => {
   console.log(stats);
 });
 
-brake.on('circuitBroken', () => {
-  console.log('----------Circuit Broken--------------');
+brake.on('circuitOpen', () => {
+  console.log('----------Circuit Opened--------------');
 });
 
-brake.on('circuitOpen', () => {
-  console.log('----------Circuit Open--------------');
+brake.on('circuitClosed', () => {
+  console.log('----------Circuit Closed--------------');
 });
 
 setInterval(() => {
