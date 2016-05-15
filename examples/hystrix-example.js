@@ -33,13 +33,19 @@ function unreliableServiceCall() {
 
 
 const brake = new Brakes(unreliableServiceCall, {
-  statInterval: 2500,
+  statInterval: 5,
   threshold: 0.5,
   circuitDuration: 15000,
   timeout: 250
 });
 
 const globalStats = Brakes.getGlobalStats();
+console.log(globalStats.getHystrixStream())
+
+setInterval(() => {
+  console.log(globalStats.getHystrixStream()._readableState.buffer.length)
+
+}, 1000)
 
 /*
 Create SSE Hysterix compliant Server
@@ -52,6 +58,20 @@ http.createServer((req, res) => {
 }).listen(8081, () => {
   console.log('---------------------');
   console.log('Hysterix Server now live at localhost:8081/hystrix.stream');
+  console.log('---------------------');
+});
+
+/*
+Create SSE Hysterix compliant Server
+*/
+http.createServer((req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream;charset=UTF-8');
+  res.setHeader('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  globalStats.getHystrixStream().pipe(res);
+}).listen(8082, () => {
+  console.log('---------------------');
+  console.log('Hysterix Server now live at localhost:8082/hystrix.stream');
   console.log('---------------------');
 });
 
