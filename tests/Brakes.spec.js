@@ -10,6 +10,7 @@ const CircuitBrokenError = require('../lib/CircuitBrokenError');
 const defaultOptions = {
   bucketSpan: 1000,
   bucketNum: 60,
+  name: 'defaultBrake',
   circuitDuration: 30000,
   statInterval: 1200,
   startDelay: 5000,
@@ -88,12 +89,20 @@ describe('Brakes Class', () => {
       brake.test();
     }).to.throw();
   });
+  it('Should be instantiated a name', () => {
+    const overrides = {
+      name: 'allYourNameAreBelongToUs'
+    };
+    const brake = new Brakes(noop, overrides);
+    expect(brake.name).to.deep.equal(overrides.name);
+  });
   it('Should be instantiated with override options', () => {
     const overrides = {
       bucketSpan: 10001,
       bucketNum: 601,
       circuitDuration: 300001,
       statInterval: 1,
+      name: 'PUT:/path',
       startDelay: 50010,
       threshold: 0.3,
       timeout: 100
