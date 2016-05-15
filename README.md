@@ -128,15 +128,15 @@ For a terminal based demonstration:
 `npm install && node examples/hystrix-example.js`
 
 ## Methods
-|Method|Argument(s)|Returns|Description|
-|---|---|---|
-|getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker|
-|*static* getGlobalStats|globalStats|N/A|Returns a reference to the global stats tracker|
-|exec|N/A|Promise|Executes the circuit|
-|fallback|function (must return promise or accept callback)|N/A|Registers a fallback function for the circuit|
-|on|eventName, function|N/A|Register an event listener|
-|destroy|N/A|N/A|Removes all listeners and deregisters with global stats tracker.|
-|isOpen|N/A|boolean|Returns `true` if circuit is open|
+Method | Argument(s) | Returns | Description 
+---|---|---|---
+getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
+*static* getGlobalStats|globalStats|N/A|Returns a reference to the global stats tracker
+exec|N/A|Promise|Executes the circuit
+fallback|function (must return promise or accept callback)|N/A|Registers a fallback function for the circuit
+on|eventName, function|N/A|Register an event listener
+destroy|N/A|N/A|Removes all listeners and deregisters with global stats tracker.
+isOpen|N/A|boolean|Returns `true` if circuit is open
 
 ## Events
   Every brake is an instance of `EventEmitter` that provides the following events:
