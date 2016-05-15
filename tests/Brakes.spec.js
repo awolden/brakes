@@ -259,6 +259,22 @@ describe('Brakes Class', () => {
     brake._stopStatsCheck();
     expect(brake._checkingStatus).to.equal(false);
   });
+  it('destroy() should remove all references', () => {
+    const brake = new Brakes(nopr);
+
+    // first test that we are handling all appropriate events
+    const expectedEvents = ['success', 'timeout', 'failure', 'snapshot'];
+    const actualEvents = Object.keys(brake._events);
+    expect(actualEvents).to.have.members(expectedEvents);
+    expect(Object.keys(brake._events).length).to.equal(expectedEvents.length);
+
+    const deregisterStub = sinon.stub(globalStats, 'deregister');
+    const removeEventStub = sinon.stub(brake, 'removeAllListeners');
+
+    brake.destroy();
+    expect(deregisterStub.calledOnce).to.equal(true);
+    expect(removeEventStub.callCount).to.equal(actualEvents.length);
+  });
   it('getGlobalStats should return instance of globalStats', () => {
     const brake = new Brakes(nopr);
     expect(brake.getGlobalStats()).to.equal(globalStats);
