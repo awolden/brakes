@@ -302,6 +302,13 @@ describe('Brakes Class', () => {
     });
     expect(spy.calledOnce).to.equal(false);
   });
+  it('isOpen should return whether or not circuit is open', () => {
+    brake = new Brakes(nopr);
+    brake._circuitOpen = true;
+    expect(brake.isOpen()).to.equal(true);
+    brake._circuitOpen = false;
+    expect(brake.isOpen()).to.equal(false);
+  });
   it('_checkStats should check and not close', () => {
     brake = new Brakes(nopr);
     const spy = sinon.spy(brake, '_open');
