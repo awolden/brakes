@@ -1,6 +1,7 @@
 'use strict';
 
 const Brakes = require('../lib/Brakes');
+const http = require('http');
 const timer = 100;
 let successRate = 2;
 let iterations = 0;
@@ -40,16 +41,22 @@ const brake = new Brakes(unreliableServiceCall, {
 
 const globalStats = Brakes.getGlobalStats();
 
-globalStats.getRawStream().on('data', (data) => {
-  console.log(data.toString());
+/*
+Create SSE Hysterix compliant Server
+*/
+http.createServer((req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream;charset=UTF-8');
+  res.setHeader('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  globalStats.getHystrixStream().pipe(res);
+}).listen(8081, () => {
+  console.log('---------------------');
+  console.log('Hysterix Server now live at localhost:8081/hystrix.stream');
+  console.log('---------------------');
 });
 
 setInterval(() => {
   brake.exec()
-    .then(() => {
-      console.log('Succesful');
-    })
-    .catch((err) => {
-      console.log('Failure', err || '');
-    });
+    .then(() => {})
+    .catch(() => {});
 }, 100);
