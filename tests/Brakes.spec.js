@@ -1,6 +1,7 @@
 'use strict';
 
 const Brakes = require('../lib/Brakes');
+const globalStats = require('../lib/globalStats');
 const expect = require('chai').expect;
 const EventEmitter = require('events').EventEmitter;
 const sinon = require('sinon');
@@ -257,6 +258,11 @@ describe('Brakes Class', () => {
     const brake = new Brakes(nopr);
     brake._stopStatsCheck();
     expect(brake._checkingStatus).to.equal(false);
+  });
+  it('getGlobalStats should return instance of globalStats', () => {
+    const brake = new Brakes(nopr);
+    expect(brake.getGlobalStats()).to.equal(globalStats);
+    expect(Brakes.getGlobalStats()).to.equal(globalStats);
   });
   it('_checkStats should not check when status flag is false', () => {
     const brake = new Brakes(nopr);
