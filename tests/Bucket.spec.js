@@ -26,6 +26,11 @@ describe('Bucket Class', () => {
     expect(bucket.successful).to.equal(1);
     expect(bucket.total).to.equal(1);
   });
+  it('Should increment shortCircuited', () => {
+    bucket.shortCircuit();
+    expect(bucket.total).to.equal(0);
+    expect(bucket.shortCircuited).to.equal(1);
+  });
   it('Should increment timedOut', () => {
     bucket.timeout();
     expect(bucket.timedOut).to.equal(1);

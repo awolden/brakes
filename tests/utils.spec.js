@@ -71,6 +71,7 @@ describe('utils', () => {
         stats: {
           failed: 4,
           timedOut: 0,
+          shortCircuited: 50,
           total: 23,
           latencyMean: 42,
           successful: 19,
@@ -94,7 +95,7 @@ describe('utils', () => {
         group: 'defaultBrakeGroup',
         currentTime: 1463292683341,
         isCircuitBreakerOpen: statsOutput.open,
-        errorPercentage: stats.failed / stats.total,
+        errorPercentage: (stats.total) ? stats.failed / stats.total : 0,
         errorCount: stats.failed,
         requestCount: stats.total,
         rollingCountCollapsedRequests: 0, // not reported
@@ -105,18 +106,18 @@ describe('utils', () => {
         rollingCountFallbackSuccess: 0, // not reported
         rollingCountResponsesFromCache: 0, // not reported
         rollingCountSemaphoreRejected: 0, // not reported
-        rollingCountShortCircuited: 0, // not reported
+        rollingCountShortCircuited: stats.shortCircuited, // not reported
         rollingCountSuccess: stats.successful,
         rollingCountThreadPoolRejected: 0, // not reported
-        rollingCountTimeout: stats.timedout,
+        rollingCountTimeout: stats.timedOut,
         currentConcurrentExecutionCount: 0, // not reported
         latencyExecute_mean: stats.latencyMean,
         latencyExecute: {
           0: stats.percentiles['0'],
           25: stats.percentiles['0.25'],
-          50: stats.percentiles['0.50'],
+          50: stats.percentiles['0.5'],
           75: stats.percentiles['0.75'],
-          90: stats.percentiles['0.90'],
+          90: stats.percentiles['0.9'],
           95: stats.percentiles['0.95'],
           99: stats.percentiles['0.99'],
           99.5: stats.percentiles['0.995'],
@@ -126,9 +127,9 @@ describe('utils', () => {
         latencyTotal: {
           0: stats.percentiles['0'],
           25: stats.percentiles['0.25'],
-          50: stats.percentiles['0.50'],
+          50: stats.percentiles['0.5'],
           75: stats.percentiles['0.75'],
-          90: stats.percentiles['0.90'],
+          90: stats.percentiles['0.9'],
           95: stats.percentiles['0.95'],
           99: stats.percentiles['0.99'],
           99.5: stats.percentiles['0.995'],
