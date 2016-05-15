@@ -128,7 +128,7 @@ For a terminal based demonstration:
 `npm install && node examples/hystrix-example.js`
 
 ## Methods
-Method | Argument(s) | Returns | Description 
+Method | Argument(s) | Returns | Description
 ---|---|---|---
 getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
 *static* getGlobalStats|globalStats|N/A|Returns a reference to the global stats tracker
@@ -185,6 +185,7 @@ Based on the `opts.statInterval` an event will be fired at regular intervals tha
    { failed: 0,
      timedOut: 0,
      total: 249,
+     shortCircuited: 0,
      latencyMean: 100,
      successful: 249,
      percentiles:
