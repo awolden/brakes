@@ -191,10 +191,10 @@ describe('Brakes Class', () => {
 
     expect(brake._closed).to.equal(true);
     expect(statsCheckSpy.calledOnce).to.equal(true);
-    expect(statsResetSpy.calledOnce).to.equal(true);
     expect(eventSpy.calledOnce).to.equal(true);
 
     setTimeout(() => {
+      expect(statsResetSpy.calledOnce).to.equal(true);
       expect(openSpy.calledOnce).to.equal(true);
       done();
     }, 20);
