@@ -38,9 +38,9 @@ const brake = new Brakes(unreliableServiceCall, {
   timeout: 250
 });
 
-brake.on('snapshot', (stats) => {
-  console.log('Running at:', stats.successful / stats.total);
-  console.log(stats);
+brake.on('snapshot', (snapshot) => {
+  console.log('Running at:', snapshot.stats.successful / snapshot.stats.total);
+  console.log(snapshot);
 });
 
 brake.on('circuitOpen', () => {
