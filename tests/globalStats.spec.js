@@ -62,7 +62,6 @@ describe('globalStats', () => {
     };
     const stub = sinon.stub(utils, 'mapToHystrixJson', (data) => data);
     globalStats._transformToHysterix(JSON.stringify(mock), null, (err, data) => {
-      console.log(err)
       expect(stub.calledOnce).to.equal(true);
       expect(data).to.equal(`data: ${JSON.stringify(mock)}\n\n`);
       utils.mapToHystrixJson.restore();
