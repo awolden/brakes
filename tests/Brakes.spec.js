@@ -231,6 +231,28 @@ describe('Brakes Class', () => {
       done();
     }, 5);
   });
+  it('_snapshotHandler should transform stats object and emit', (done) => {
+    const brake = new Brakes(nopr, {
+      name: 'brake1',
+      group: 'brakeGroup1'
+    });
+    const eventSpy = sinon.spy(() => {});
+    brake.on('snapshot', eventSpy);
+    brake._snapshotHandler({
+      foo: 'bar'
+    });
+    setTimeout(() => {
+      expect(eventSpy.calledOnce).to.equal(true);
+      const statsObj = eventSpy.firstCall.args[0];
+      expect(statsObj.name).to.equal('brake1');
+      expect(statsObj.group).to.equal('brakeGroup1');
+      expect(statsObj.time).to.be.a('number');
+      expect(statsObj.stats).to.deep.equal({
+        foo: 'bar'
+      });
+      done();
+    }, 5);
+  });
   it('_stopStatsCheck should set flag', () => {
     const brake = new Brakes(nopr);
     brake._stopStatsCheck();
