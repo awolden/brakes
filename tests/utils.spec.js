@@ -66,6 +66,7 @@ describe('utils', () => {
         time: 1463292683341,
         circuitDuration: 100,
         threshold: 0.5,
+        waitThreshold: 666,
         stats: {
           failed: 4,
           timedOut: 0,
@@ -131,7 +132,7 @@ describe('utils', () => {
           99.5: stats.percentiles['0.995'],
           100: stats.percentiles['1']
         },
-        propertyValue_circuitBreakerRequestVolumeThreshold: 0,
+        propertyValue_circuitBreakerRequestVolumeThreshold: 666,
         propertyValue_circuitBreakerSleepWindowInMilliseconds: statsOutput.circuitDuration,
         propertyValue_circuitBreakerErrorThresholdPercentage: statsOutput.threshold,
         propertyValue_circuitBreakerForceOpen: false, // not reported
