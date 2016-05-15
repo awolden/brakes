@@ -64,6 +64,7 @@ describe('utils', () => {
         name: 'defaultBrake',
         group: 'defaultBrakeGroup',
         time: 1463292683341,
+        open:false,
         circuitDuration: 100,
         threshold: 0.5,
         waitThreshold: 666,
@@ -91,7 +92,7 @@ describe('utils', () => {
         name: 'defaultBrake',
         group: 'defaultBrakeGroup',
         currentTime: 1463292683341,
-        isCircuitBreakerOpen: false, // TODO
+        isCircuitBreakerOpen: statsOutput.open,
         errorPercentage: stats.failed / stats.total,
         errorCount: stats.failed,
         requestCount: stats.total,
