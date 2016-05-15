@@ -98,6 +98,7 @@ describe('Stats Class', () => {
     expect(stats._generateStats(buckets)).to.deep.equal({
       total: 0,
       failed: 0,
+      latencyMean: 0,
       successful: 0,
       timedOut: 0,
       percentiles: {
@@ -129,6 +130,7 @@ describe('Stats Class', () => {
       total: 6,
       failed: 2,
       successful: 2,
+      latencyMean: 381,
       timedOut: 2,
       percentiles: {
         0: 12,
@@ -146,6 +148,7 @@ describe('Stats Class', () => {
       total: 6,
       failed: 2,
       successful: 2,
+      latencyMean: 381,
       timedOut: 2,
       percentiles: {
         0: 12,
@@ -170,6 +173,7 @@ describe('Stats Class', () => {
       total: 0,
       failed: 0,
       successful: 0,
+      latencyMean: 0,
       timedOut: 0,
       percentiles: {
         0: 0,
@@ -194,6 +198,7 @@ describe('Stats Class', () => {
       total: 1,
       failed: 1,
       successful: 0,
+      latencyMean: 0,
       timedOut: 0,
       percentiles: {
         0: 0,
@@ -218,6 +223,7 @@ describe('Stats Class', () => {
       total: 1,
       failed: 0,
       successful: 1,
+      latencyMean: 0,
       timedOut: 0,
       percentiles: {
         0: 0,
@@ -242,6 +248,7 @@ describe('Stats Class', () => {
       total: 1,
       failed: 0,
       successful: 0,
+      latencyMean: 0,
       timedOut: 1,
       percentiles: {
         0: 0,
@@ -267,6 +274,7 @@ describe('Stats Class', () => {
       total: 1,
       failed: 0,
       successful: 0,
+      latencyMean: 100,
       timedOut: 1,
       percentiles: {
         0: 100,
@@ -298,6 +306,7 @@ describe('Stats Class', () => {
       total: 0,
       failed: 0,
       successful: 0,
+      latencyMean: 0,
       timedOut: 0,
       percentiles: {
         0: 0,
