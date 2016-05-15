@@ -40,12 +40,6 @@ const brake = new Brakes(unreliableServiceCall, {
 });
 
 const globalStats = Brakes.getGlobalStats();
-console.log(globalStats.getHystrixStream())
-
-setInterval(() => {
-  console.log(globalStats.getHystrixStream()._readableState.buffer.length)
-
-}, 1000)
 
 /*
 Create SSE Hysterix compliant Server
