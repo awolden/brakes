@@ -18,7 +18,7 @@ const defaultOptions = {
   registerGlobal: true,
   circuitDuration: 30000,
   statInterval: 1200,
-  startDelay: 5000,
+  waitThreshold: 100,
   threshold: 0.5,
   timeout: 15000
 };
@@ -123,7 +123,7 @@ describe('Brakes Class', () => {
       registerGlobal: false,
       name: 'PUT:/path',
       group: 'fakeGroup',
-      startDelay: 50010,
+      waitThreshold: 1000,
       threshold: 0.3,
       timeout: 100
     };
@@ -195,7 +195,6 @@ describe('Brakes Class', () => {
       circuitDuration: 10
     });
 
-    const statsCheckSpy = sinon.spy(brake, '_stopStatsCheck');
     const statsResetSpy = sinon.spy(brake._stats, 'reset');
     const openSpy = sinon.spy(brake, '_close');
     const eventSpy = sinon.spy(() => {});
@@ -211,7 +210,6 @@ describe('Brakes Class', () => {
     brake._open();
 
     expect(brake._circuitOpen).to.equal(true);
-    expect(statsCheckSpy.calledOnce).to.equal(true);
     expect(eventSpy.calledOnce).to.equal(true);
 
     setTimeout(() => {
@@ -224,23 +222,11 @@ describe('Brakes Class', () => {
   it('_close should close', () => {
     brake = new Brakes(nopr);
     brake._circuitOpened = true;
-    const funcSpy = sinon.spy(brake, '_startStatsCheck');
     const eventSpy = sinon.spy(() => {});
     brake.on('circuitClosed', eventSpy);
     brake._close();
     expect(brake._circuitOpen).to.equal(false);
-    expect(funcSpy.calledOnce).to.equal(true);
     expect(eventSpy.calledOnce).to.equal(true);
-  });
-  it('_startStatsCheck should set flag after delay', (done) => {
-    brake = new Brakes(nopr, {
-      startDelay: 1
-    });
-    brake._stopStatsCheck();
-    setTimeout(() => {
-      expect(brake._checkingStatus).to.equal(true);
-      done();
-    }, 5);
   });
   it('_snapshotHandler should transform stats object and emit', (done) => {
     brake = new Brakes(nopr, {
@@ -267,11 +253,6 @@ describe('Brakes Class', () => {
       done();
     }, 5);
   });
-  it('_stopStatsCheck should set flag', () => {
-    brake = new Brakes(nopr);
-    brake._stopStatsCheck();
-    expect(brake._checkingStatus).to.equal(false);
-  });
   it('destroy() should remove all references', () => {
     brake = new Brakes(nopr);
 
@@ -294,16 +275,18 @@ describe('Brakes Class', () => {
     expect(brake.getGlobalStats()).to.equal(globalStats);
     expect(Brakes.getGlobalStats()).to.equal(globalStats);
   });
-  it('_checkStats should not check when status flag is false', () => {
+  it('_checkStats should not check when threshold isn\'t met', () => {
     brake = new Brakes(nopr);
     const spy = sinon.spy(brake, '_close');
-    brake._checkStats();
+    brake._checkStats({
+      total: 50
+    });
     expect(spy.calledOnce).to.equal(false);
   });
   it('_checkStats should not check when total is 0', () => {
     brake = new Brakes(nopr);
     brake._checkingStatus = true;
-    const spy = sinon.spy(brake, '_close');
+    const spy = sinon.spy(brake, '_open');
     brake._checkStats({
       total: 0
     });
@@ -313,7 +296,7 @@ describe('Brakes Class', () => {
     brake = new Brakes(nopr);
     brake._checkingStatus = true;
     brake._closed = true;
-    const spy = sinon.spy(brake, '_close');
+    const spy = sinon.spy(brake, '_open');
     brake._checkStats({
       total: 1
     });
@@ -321,20 +304,20 @@ describe('Brakes Class', () => {
   });
   it('_checkStats should check and not close', () => {
     brake = new Brakes(nopr);
-    const spy = sinon.spy(brake, '_close');
+    const spy = sinon.spy(brake, '_open');
     brake._checkStats({
-      successful: 10,
-      total: 10
+      successful: 450,
+      total: 500
     });
     expect(spy.calledOnce).to.equal(false);
   });
-  it('_checkStats should check and not close', () => {
+  it('_checkStats should check and close', () => {
     brake = new Brakes(nopr);
     brake._checkingStatus = true;
     const spy = sinon.spy(brake, '_open');
     brake._checkStats({
       successful: 1,
-      total: 10
+      total: 200
     });
     expect(spy.calledOnce).to.equal(true);
   });
