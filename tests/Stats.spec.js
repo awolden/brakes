@@ -125,7 +125,7 @@ describe('Stats Class', () => {
     buckets[1].success(1234);
     buckets[0].timeout(432);
     buckets[1].timeout(12);
-    expect(stats._generateStats(buckets)).to.deep.equal({
+    expect(stats._generateStats(buckets, true)).to.deep.equal({
       total: 6,
       failed: 2,
       successful: 2,
@@ -196,15 +196,15 @@ describe('Stats Class', () => {
       successful: 0,
       timedOut: 0,
       percentiles: {
-        0: 100,
-        1: 100,
-        0.25: 100,
-        0.5: 100,
-        0.75: 100,
-        0.9: 100,
-        0.95: 100,
-        0.99: 100,
-        0.995: 100
+        0: 0,
+        1: 0,
+        0.25: 0,
+        0.5: 0,
+        0.75: 0,
+        0.9: 0,
+        0.95: 0,
+        0.99: 0,
+        0.995: 0
       }
     });
   });
@@ -220,15 +220,15 @@ describe('Stats Class', () => {
       successful: 1,
       timedOut: 0,
       percentiles: {
-        0: 100,
-        1: 100,
-        0.25: 100,
-        0.5: 100,
-        0.75: 100,
-        0.9: 100,
-        0.95: 100,
-        0.99: 100,
-        0.995: 100
+        0: 0,
+        1: 0,
+        0.25: 0,
+        0.5: 0,
+        0.75: 0,
+        0.9: 0,
+        0.95: 0,
+        0.99: 0,
+        0.995: 0
       }
     });
   });
@@ -244,15 +244,15 @@ describe('Stats Class', () => {
       successful: 0,
       timedOut: 1,
       percentiles: {
-        0: 100,
-        1: 100,
-        0.25: 100,
-        0.5: 100,
-        0.75: 100,
-        0.9: 100,
-        0.95: 100,
-        0.99: 100,
-        0.995: 100
+        0: 0,
+        1: 0,
+        0.25: 0,
+        0.5: 0,
+        0.75: 0,
+        0.9: 0,
+        0.95: 0,
+        0.99: 0,
+        0.995: 0
       }
     });
   });
