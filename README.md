@@ -12,7 +12,7 @@
 brakes
 ===
 
-A circuit breaker pattern for nodejs. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will trip and internal circuit if it begins to detect that the remote service is beginning to fail. This module is largely based on Netflix's [Hysterix](https://github.com/Netflix/Hystrix)
+A circuit breaker pattern for nodejs. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will trip and internal circuit if it begins to detect that the remote service is beginning to fail. This module is largely based on Netflix's [Hystrix](https://github.com/Netflix/Hystrix)
 
 **Requires Node 4.2.0 or higher**
 
@@ -32,6 +32,7 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
 - [Events](#events)
 - [Configuration](#configuration)
 - [Stats](#stats)
+- [Hystrix Dashboard](#hystrix-dashboard)
 - [Development](#development)
 
 ### Bluebird and Promisify
@@ -120,7 +121,11 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
 
 For a terminal based demonstration:
 
+**General Demo**
 `npm install && node examples/example1.js`
+
+**Hystrix Stream Demo**
+`npm install && node examples/hystrix-example.js`
 
 ## Methods
 |Method|Argument(s)|Returns|Description|
@@ -195,6 +200,44 @@ Based on the `opts.statInterval` an event will be fired at regular intervals tha
     }
   }
 ```
+
+**Global Stats Stream**
+
+Brakes automatically tracks all created instances of brakes and provides a global stats stream for easy consumption and reporting on all brakes instances. These streams will aggregate all stat events into one single stream.
+
+```javascript
+const globalStats = Brakes.getGlobalStats();
+
+globalStats.getRawStream().on('data', (stats) =>{
+  console.log('received global stats ->', stats);
+});
+```
+
+## Hystrix Dashboard
+
+Using the global stats stream with a special transform, brakes makes it incredibly easy to generate a SSE stream that is compliant with the hystrix dashboard and turbine.
+
+**Example:**
+```javascript
+const globalStats = Brakes.getGlobalStats();
+
+/*
+Create SSE Hystrix compliant Server
+*/
+http.createServer((req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream;charset=UTF-8');
+  res.setHeader('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
+  res.setHeader('Pragma', 'no-cache');
+  globalStats.getHystrixStream().pipe(res);
+}).listen(8081, () => {
+  console.log('---------------------');
+  console.log('Hystrix Stream now live at localhost:8081/hystrix.stream');
+  console.log('---------------------');
+});
+```
+
+Addtional Reading: [Hystrix Metrics Event Stream](https://github.com/Netflix/Hystrix/tree/master/hystrix-contrib/hystrix-metrics-event-stream), [Turbine](https://github.com/Netflix/Turbine/wiki), [Hystrix Dashboard](https://github.com/Netflix/Hystrix/wiki/Dashboard)
+
 ===
 ## Development
 
