@@ -64,6 +64,8 @@ describe('utils', () => {
         name: 'defaultBrake',
         group: 'defaultBrakeGroup',
         time: 1463292683341,
+        circuitDuration: 100,
+        threshold: 0.5,
         stats: {
           failed: 4,
           timedOut: 0,
@@ -130,8 +132,8 @@ describe('utils', () => {
           100: stats.percentiles['1']
         },
         propertyValue_circuitBreakerRequestVolumeThreshold: 0,
-        propertyValue_circuitBreakerSleepWindowInMilliseconds: 0,
-        propertyValue_circuitBreakerErrorThresholdPercentage: 0,
+        propertyValue_circuitBreakerSleepWindowInMilliseconds: statsOutput.circuitDuration,
+        propertyValue_circuitBreakerErrorThresholdPercentage: statsOutput.threshold,
         propertyValue_circuitBreakerForceOpen: false, // not reported
         propertyValue_circuitBreakerForceClosed: false, // not reported
         propertyValue_circuitBreakerEnabled: true, // not reported
