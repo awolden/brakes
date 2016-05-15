@@ -35,7 +35,7 @@ describe('CircuitBrokenError', () => {
       successful: 40
     };
     const mockThreshold = 0.5;
-    expect(new CircuitBrokenError(mockTotals, mockThreshold)).to.have.a.property('message').that.equals(`${consts.CIRCUIT_BROKEN} - The percentage of failed requests (60%) is greater than the threshold specified (50%)`);
+    expect(new CircuitBrokenError(mockTotals, mockThreshold)).to.have.a.property('message').that.equals(`${consts.CIRCUIT_OPENED} - The percentage of failed requests (60%) is greater than the threshold specified (50%)`);
   });
 
 });
