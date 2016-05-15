@@ -72,6 +72,7 @@ describe('utils', () => {
           failed: 4,
           timedOut: 0,
           total: 23,
+          latencyMean: 42,
           successful: 19,
           percentiles: {
             0: 100,
@@ -109,7 +110,7 @@ describe('utils', () => {
         rollingCountThreadPoolRejected: 0, // not reported
         rollingCountTimeout: stats.timedout,
         currentConcurrentExecutionCount: 0, // not reported
-        latencyExecute_mean: 13, // todo
+        latencyExecute_mean: stats.latencyMean,
         latencyExecute: {
           0: stats.percentiles['0'],
           25: stats.percentiles['0.25'],
