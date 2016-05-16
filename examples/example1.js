@@ -38,17 +38,17 @@ const brake = new Brakes(unreliableServiceCall, {
   timeout: 250
 });
 
-brake.on('snapshot', (stats) => {
-  console.log('Running at:', stats.successful / stats.total);
-  console.log(stats);
-});
-
-brake.on('circuitBroken', () => {
-  console.log('----------Circuit Broken--------------');
+brake.on('snapshot', (snapshot) => {
+  console.log('Running at:', snapshot.stats.successful / snapshot.stats.total);
+  console.log(snapshot);
 });
 
 brake.on('circuitOpen', () => {
-  console.log('----------Circuit Open--------------');
+  console.log('----------Circuit Opened--------------');
+});
+
+brake.on('circuitClosed', () => {
+  console.log('----------Circuit Closed--------------');
 });
 
 setInterval(() => {
