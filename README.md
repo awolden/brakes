@@ -237,9 +237,15 @@ http.createServer((req, res) => {
 });
 ```
 
+To aid in testing it might be useful to have a local instance of the hystrix dashboard running:
+
+`docker run -d -p 8080:8080 --name hystrix-dashboard mlabouardy/hystrix-dashboard:latest`
+
+
 Addtional Reading: [Hystrix Metrics Event Stream](https://github.com/Netflix/Hystrix/tree/master/hystrix-contrib/hystrix-metrics-event-stream), [Turbine](https://github.com/Netflix/Turbine/wiki), [Hystrix Dashboard](https://github.com/Netflix/Hystrix/wiki/Dashboard)
 
-===
+---
+
 ## Development
 
 We gladly welcome pull requests and code contributions. To develop brakes locally clone the repo and use the following commands to aid in development:
