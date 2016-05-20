@@ -12,7 +12,7 @@
 brakes
 ===
 
-A circuit breaker pattern for nodejs. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will trip and internal circuit if it begins to detect that the remote service is beginning to fail. This module is largely based on Netflix's [Hystrix](https://github.com/Netflix/Hystrix)
+A circuit breaker pattern for nodejs. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will trip an internal circuit if it begins to detect that the remote service is beginning to fail. This module is largely based on Netflix's [Hystrix](https://github.com/Netflix/Hystrix)
 
 **Requires Node 4.2.0 or higher**
 
