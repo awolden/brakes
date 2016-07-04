@@ -20,7 +20,8 @@ const defaultOptions = {
   statInterval: 1200,
   waitThreshold: 100,
   threshold: 0.5,
-  timeout: 15000
+  timeout: 15000,
+  healthCheckInterval: 5000
 };
 
 const noop = function noop(foo, err, cb) {
@@ -44,6 +45,11 @@ const slowpr = function slowpr(foo) {
   });
 };
 const fbpr = function fallback(foo, err) {
+  return new Promise((resolve) => {
+    resolve(foo || err);
+  });
+};
+const hc = function healthCheck(foo, err) {
   return new Promise((resolve) => {
     resolve(foo || err);
   });
@@ -125,7 +131,8 @@ describe('Brakes Class', () => {
       group: 'fakeGroup',
       waitThreshold: 1000,
       threshold: 0.3,
-      timeout: 100
+      timeout: 100,
+      healthCheckInterval: 1000
     };
     brake = new Brakes(noop, overrides);
     expect(brake._opts).to.deep.equal(overrides);
@@ -189,6 +196,16 @@ describe('Brakes Class', () => {
     return brake.exec(null, 'thisShouldFailFirstCall').then(result => {
       expect(result).to.equal('thisShouldFailFirstCall');
     });
+  });
+  it('Should call healthCheck if circuit is broken', () => {
+    brake = new Brakes(nopr);
+    brake.healthCheck(fbpr);
+    const hcSpy = sinon.spy(brake, '_healthCheck');
+
+    brake._open();
+    setTimeout(() => {
+      expect(hcSpy.calledOnce).to.equal(true);
+    }, 500);
   });
   it('_open should open', (done) => {
     brake = new Brakes(nopr, {
