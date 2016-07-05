@@ -117,12 +117,60 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
     });
 ```
 
+### Health check
+
+```javascript
+  function promiseCall(foo){
+    return new Promise((resolve, reject) =>{
+      if (foo) resolve(foo);
+      else reject(foo);
+    });
+  }
+
+  function fallbackCall(foo){
+    return new Promise((resolve, reject) =>{
+      resolve('I always succeed');
+    });
+  }
+  
+  function healthCheckCall(foo){
+    return new Promise((resolve, reject) => {
+      //this will return 20% true, 80% false
+      if (Math.random() > 0.8){
+        resolve('Health check success');      
+      } else {
+        reject('Health check failed');
+      }
+    });
+  }
+
+  const brake = new Brakes(promiseCall, {timeout: 150});
+
+  brake.fallback(fallbackCall);
+  
+  brake.healthCheck(healthCheckCall);
+
+  brake.exec(false)
+    .then((result) =>{
+      console.log(`result: ${result}`);
+    })
+    .catch(err =>{
+      console.error(`error: ${err}`);
+    });
+```
+
 ### Demonstration
 
 For a terminal based demonstration:
 
 **General Demo**
 `npm install && node examples/example1.js`
+
+**Fallback Demo**
+`npm install && node examples/fallback-example.js`
+
+**Health check Demo**
+`npm install && node examples/healthCheck-example.js`
 
 **Hystrix Stream Demo**
 `npm install && node examples/hystrix-example.js`
@@ -134,6 +182,7 @@ getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
 *static* getGlobalStats|globalStats|N/A|Returns a reference to the global stats tracker
 exec|N/A|Promise|Executes the circuit
 fallback|function (must return promise or accept callback)|N/A|Registers a fallback function for the circuit
+healthCheck|function (must return promise or accept callback)|N/A|Registers a health check function for the circuit
 on|eventName, function|N/A|Register an event listener
 destroy|N/A|N/A|Removes all listeners and deregisters with global stats tracker.
 isOpen|N/A|boolean|Returns `true` if circuit is open
@@ -147,6 +196,7 @@ isOpen|N/A|boolean|Returns `true` if circuit is open
   - **circuitClosed**: Event fired when circuit is closed
   - **circuitOpen**: Event fired when circuit is open
   - **snapshot**: Event fired on stats snapshot
+  - **healthCheckFailed**: Event fired on failure of each health check execution
 
 ## Configuration
   Available configuration options.
@@ -160,6 +210,9 @@ isOpen|N/A|boolean|Returns `true` if circuit is open
 - **waitThreshold**: `number` of requests to wait before testing circuit health
 - **threshold**: `%` threshold for successful calls. If the % of successful calls dips below this threshold the circuit will break
 - **timeout**: time in `ms` before a service call will timeout
+- **healthCheckInterval**: time in `ms` interval between each execution of health check function
+- **healthCheck**: function to call for the health check (can be defined also with calling `healthCheck` function)
+- **fallback**: function to call for fallback (can be defined also with calling `fallback` function)
 
 ## Stats
 Based on the `opts.statInterval` an event will be fired at regular intervals that contains a snapshot of the running state of the application.
