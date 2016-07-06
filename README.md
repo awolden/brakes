@@ -28,6 +28,7 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
   - [Promise](#promise)
   - [Callback](#callback)
   - [Fallback](#fallback)
+  - [Health Check](#health-check)
 - [Methods](#methods)
 - [Events](#events)
 - [Configuration](#configuration)
@@ -132,7 +133,7 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
       resolve('I always succeed');
     });
   }
-  
+
   function healthCheckCall(foo){
     return new Promise((resolve, reject) => {
       //this will return 20% true, 80% false
@@ -147,7 +148,7 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
   const brake = new Brakes(promiseCall, {timeout: 150});
 
   brake.fallback(fallbackCall);
-  
+
   brake.healthCheck(healthCheckCall);
 
   brake.exec(false)
