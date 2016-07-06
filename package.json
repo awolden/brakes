@@ -1,6 +1,6 @@
 {
   "name": "brakes",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Node.js Circuit Breaker Pattern",
   "main": "index.js",
   "repository": {
@@ -11,7 +11,9 @@
     "test": "node_modules/.bin/_mocha  $(find . -name '*.spec.js')",
     "test:lint": "node_modules/eslint/bin/eslint.js ./  || exit 0",
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- $(find . -name '*.spec.js')",
-    "coveralls": "cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coveralls": "cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
+    "coverage:win": "node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha ./tests/*.spec.js",
+    "test:win": "node_modules/.bin/_mocha ./tests/*.spec.js"
   },
   "keywords": [
     "circuit",
