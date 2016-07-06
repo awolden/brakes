@@ -211,8 +211,10 @@ describe('Brakes Class', () => {
       expect(hcSpy.calledOnce).to.equal(true);
     }, 500);
   });
-  it('Should close circuit if _setHealthInterval is called with successful health check', () => {
-    brake = new Brakes(nopr);
+  it('Should close circuit if _setHealthInterval is called with successful health check', (done) => {
+    brake = new Brakes(nopr, {
+      healthCheckInterval: 1
+    });
     brake.healthCheck(hc);
     const hcSpy = sinon.spy(brake, '_setHealthInterval');
     const statsResetSpy = sinon.spy(brake._stats, 'reset');
@@ -224,12 +226,81 @@ describe('Brakes Class', () => {
       expect(hcSpy.calledOnce).to.equal(true);
       expect(statsResetSpy.calledOnce).to.equal(true);
       expect(closeSpy.calledOnce).to.equal(true);
-    }, 500);
+      clearInterval(brake._healthInterval);
+      done();
+    }, 5);
   });
   it('Should accept health check & fallback function from options', () => {
-    brake = new Brakes(nopr, {healthCheck: hc, fallback: fbpr});
+    brake = new Brakes(nopr, {
+      healthCheck: hc,
+      fallback: fbpr
+    });
     expect(brake._healthCheck).to.equal(hc);
     expect(brake._fallback).to.equal(fbpr);
+  });
+  it('Should accept a health check function that is async', () => {
+    brake = new Brakes(nopr, {
+      healthCheck: noop
+    });
+    expect(brake._healthCheck('foo').then).to.not.equal(undefined);
+  });
+  it('_setHealthInterval should open', (done) => {
+    brake = new Brakes(nopr, {
+      healthCheck: hc,
+      healthCheckInterval: 1
+    });
+    const statsResetSpy = sinon.spy(brake._stats, 'reset');
+    const openSpy = sinon.spy(brake, '_close');
+    // check normal behavior
+    brake._circuitOpen = true;
+    brake._setHealthInterval();
+    setTimeout(() => {
+      expect(statsResetSpy.called).to.equal(true);
+      expect(openSpy.called).to.equal(true);
+      brake._close();
+      clearInterval(brake._healthInterval);
+      done();
+    }, 5);
+  });
+  it('_setHealthInterval should emit error', (done) => {
+    brake = new Brakes(nopr, {
+      healthCheck: nopr.bind(null, null, 'thisisanerror'),
+      healthCheckInterval: 0
+    });
+
+    const eventSpy = sinon.spy(() => {});
+    brake.on('healthCheckFailed', eventSpy);
+
+    // check normal behavior
+    brake._circuitOpen = true;
+    brake._setHealthInterval();
+    setTimeout(() => {
+      expect(eventSpy.called).to.equal(true);
+      brake._close();
+      clearInterval(brake._healthInterval);
+      done();
+    }, 5);
+  });
+  it('_setHealthInterval should do nothing if interval is already set', () => {
+    brake = new Brakes(nopr, {
+      healthCheck: nopr.bind(null, null, 'thisisanerror'),
+      healthCheckInterval: 0
+    });
+    brake._healthInterval = 'foo';
+    brake._setHealthInterval();
+    expect(brake._healthInterval).to.equal('foo');
+  });
+  it('_setHealthInterval should clearInterval, if circuit is opened', (done) => {
+    brake = new Brakes(nopr, {
+      healthCheck: hc,
+      healthCheckInterval: 0
+    });
+    brake._circuitOpen = false;
+    brake._setHealthInterval();
+    setTimeout(() => {
+      expect(brake._healthInterval).to.equal(undefined);
+      done();
+    }, 3);
   });
   it('_open should open', (done) => {
     brake = new Brakes(nopr, {
