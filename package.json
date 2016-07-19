@@ -22,6 +22,16 @@
     "circuitbreaker",
     "hystrix"
   ],
+  "greenkeeper": {
+    "ignore": [
+      "eslint",
+      "eslint-config-airbnb",
+      "eslint-plugin-import",
+      "eslint-plugin-jsx-a11y",
+      "eslint-plugin-react"
+
+    ]
+  },
   "author": "Alex Wolden <awolden@gmail.com>",
   "license": "ISC",
   "dependencies": {
