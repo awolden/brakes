@@ -35,8 +35,8 @@ const noop = function noop(foo, err, cb) {
 };
 const nopr = function nopr(foo, err) {
   return new Promise((resolve, reject) => {
-    if (err) reject(new Error(err));
-    else resolve(foo);
+    if (err) { reject(new Error(err)); }
+    else { resolve(foo); }
   });
 };
 const slowpr = function slowpr(foo) {

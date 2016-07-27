@@ -29,7 +29,6 @@
       "eslint-plugin-import",
       "eslint-plugin-jsx-a11y",
       "eslint-plugin-react"
-
     ]
   },
   "author": "Alex Wolden <awolden@gmail.com>",
