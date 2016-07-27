@@ -1,6 +1,7 @@
 'use strict';
 
 const Brakes = require('../lib/Brakes');
+const Circuit = require('../lib/Circuit');
 const globalStats = require('../lib/globalStats');
 const expect = require('chai').expect;
 const EventEmitter = require('events').EventEmitter;
@@ -439,5 +440,10 @@ describe('Brakes Class', () => {
       total: 200
     });
     expect(spy.calledOnce).to.equal(true);
+  });
+  it('Should be able to create Circuit', () => {
+    brake = new Brakes(noop);
+    let circuit = brake.createCircuit(noop);
+    expect(circuit).to.be.instanceof(Circuit);
   });
 });
