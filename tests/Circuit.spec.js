@@ -60,7 +60,10 @@ const hc = function healthCheck(foo, err) {
 describe('Circuit Class', () => {
   afterEach(() => {
     if (brake instanceof Brakes) {
-      brake.destroy();
+      try { // trying to catch the occasional for-no-obvious-reason Istanbul error
+        brake.destroy();
+      }
+      catch () {}
       brake = undefined;
     }
   });
