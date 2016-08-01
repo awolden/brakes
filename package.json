@@ -29,7 +29,6 @@
       "eslint-plugin-import",
       "eslint-plugin-jsx-a11y",
       "eslint-plugin-react"
-
     ]
   },
   "author": "Alex Wolden <awolden@gmail.com>",
@@ -47,7 +46,7 @@
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-react": "^5.1.1",
     "istanbul": "^0.4.3",
-    "mocha": "^2.4.5",
+    "mocha": "^3.0.0",
     "sinon": "^1.17.3"
   }
 }
