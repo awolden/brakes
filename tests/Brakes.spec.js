@@ -224,16 +224,6 @@ describe('Brakes Class', () => {
       expect(result).to.equal('thisShouldFailFirstCall');
     });
   });
-  it('Should call healthCheck if circuit is broken', () => {
-    brake = new Brakes(nopr);
-    brake.healthCheck(fbpr);
-    const hcSpy = sinon.spy(brake, '_healthCheck');
-
-    brake._open();
-    setTimeout(() => {
-      expect(hcSpy.calledOnce).to.equal(true);
-    }, 500);
-  });
   it('Should close circuit if _setHealthInterval is called with successful health check', (done) => {
     brake = new Brakes(nopr, {
       healthCheckInterval: 1
