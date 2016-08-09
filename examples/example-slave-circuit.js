@@ -31,14 +31,17 @@ function unreliableServiceCall() {
 }
 
 
-const brake = new Brakes(unreliableServiceCall, {
+// Create a master brakes instance with no main function
+const brake = new Brakes({
   statInterval: 2500,
   threshold: 0.5,
   circuitDuration: 15000,
   timeout: 250
 });
-const circuit1 = brake.createCircuit(unreliableServiceCall, { timeout: 500 });
-const circuit2 = brake.createCircuit(unreliableServiceCall, { timeout: 1000 });
+
+//create slave circuits
+const circuit1 = brake.slaveCircuit(unreliableServiceCall, { timeout: 500 });
+const circuit2 = brake.slaveCircuit(unreliableServiceCall, { timeout: 1000 });
 
 brake.on('snapshot', (snapshot) => {
   console.log('Running at:', snapshot.stats.successful / snapshot.stats.total);

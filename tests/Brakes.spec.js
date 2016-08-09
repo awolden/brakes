@@ -463,9 +463,9 @@ describe('Brakes Class', () => {
     });
     expect(spy.calledOnce).to.equal(true);
   });
-  it('Should be able to create Circuit', () => {
+  it('Should be able to create Slave Circuit', () => {
     brake = new Brakes(noop);
-    let circuit = brake.createCircuit(noop);
+    const circuit = brake.slaveCircuit(noop);
     expect(circuit).to.be.instanceof(Circuit);
   });
 });
