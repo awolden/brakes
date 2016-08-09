@@ -37,8 +37,8 @@ const brake = new Brakes(unreliableServiceCall, {
   circuitDuration: 15000,
   timeout: 250
 });
-const circuit1 = new brake.createCircuit(unreliableServiceCall, { timeout: 500 });
-const circuit2 = new brake.createCircuit(unreliableServiceCall, { timeout: 1000 });
+const circuit1 = brake.createCircuit(unreliableServiceCall, { timeout: 500 });
+const circuit2 = brake.createCircuit(unreliableServiceCall, { timeout: 1000 });
 
 brake.on('snapshot', (snapshot) => {
   console.log('Running at:', snapshot.stats.successful / snapshot.stats.total);
