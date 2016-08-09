@@ -8,6 +8,7 @@ const EventEmitter = require('events').EventEmitter;
 const sinon = require('sinon');
 const TimeOutError = require('../lib/TimeOutError');
 const CircuitBrokenError = require('../lib/CircuitBrokenError');
+const Promise = require('bluebird');
 
 let brake;
 
@@ -36,8 +37,12 @@ const noop = function noop(foo, err, cb) {
 };
 const nopr = function nopr(foo, err) {
   return new Promise((resolve, reject) => {
-    if (err) { reject(new Error(err)); }
-    else { resolve(foo); }
+    if (err) {
+      reject(new Error(err));
+    }
+    else {
+      resolve(foo);
+    }
   });
 };
 const slowpr = function slowpr(foo) {
@@ -77,28 +82,45 @@ describe('Brakes Class', () => {
     // expect(brake._stats).to.be.instanceof(Stats);
     expect(brake._opts).to.deep.equal(defaultOptions);
   });
+  it('Should accept no function with opts', () => {
+    brake = new Brakes({
+      name: 'foo'
+    });
+    expect(brake._masterCircuit).to.equal(undefined);
+    expect(brake._opts.name).to.equal('foo');
+    try {
+      brake.fallback();
+    }
+    catch (e) {
+      expect(e).to.be.an('error');
+    }
+    return brake.exec('test').then(null, (err) => {
+      expect(err).to.be.an('error');
+    });
+  });
   it('Should promisify the service func', () => {
     brake = new Brakes(noop);
-    return brake._serviceCall('test').then((result) => {
+    return brake.exec('test').then((result) => {
       expect(result).to.equal('test');
     });
   });
   it('Should promisify and reject service func', () => {
     brake = new Brakes(noop);
-    return brake._serviceCall(null, 'err').then(null, (err) => {
+    return brake.exec(null, 'err').then(null, (err) => {
       expect(err).to.be.instanceof(Error);
       expect(err.message).to.equal('err');
     });
   });
+
   it('Should accept a promise', () => {
     brake = new Brakes(nopr);
-    return brake._serviceCall('test').then((result) => {
+    return brake.exec('test').then((result) => {
       expect(result).to.equal('test');
     });
   });
   it('Should reject a promise', () => {
     brake = new Brakes(nopr);
-    return brake._serviceCall(null, 'err').then(null, (err) => {
+    return brake.exec(null, 'err').then(null, (err) => {
       expect(err).to.be.instanceof(Error);
       expect(err.message).to.equal('err');
     });
@@ -237,7 +259,7 @@ describe('Brakes Class', () => {
       fallback: fbpr
     });
     expect(brake._healthCheck).to.equal(hc);
-    expect(brake._fallback).to.equal(fbpr);
+    expect(brake._masterCircuit._fallback).to.equal(fbpr);
   });
   it('Should accept a health check function that is async', () => {
     brake = new Brakes(nopr, {
