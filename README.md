@@ -29,7 +29,7 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
   - [Callback](#callback)
   - [Fallback](#fallback)
   - [Health Check](#health-check)
-    [Slave Circuits](#slave-circuits)
+  - [Slave Circuits](#slave-circuits)
 - [Methods](#methods)
 - [Events](#events)
 - [Configuration](#configuration)
