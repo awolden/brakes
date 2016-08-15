@@ -29,6 +29,7 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
   - [Callback](#callback)
   - [Fallback](#fallback)
   - [Health Check](#health-check)
+    [Slave Circuits](#slave-circuits)
 - [Methods](#methods)
 - [Events](#events)
 - [Configuration](#configuration)
@@ -160,6 +161,41 @@ A circuit breaker pattern for nodejs. A circuit breaker provides latency and fau
     });
 ```
 
+### Slave Circuits
+
+Brakes exposes the ability to create a master `Brakes instance` that can then contain slaveCircuits that all report to a central stats object. This allows all slaveCircuits to be tripped at the same time when the overall health of all the slaveCircuits crosses a defined threshold.
+
+See `examples/slave-circuit.js` for a more complete example.
+
+```javascript
+function promiseCall(foo){
+  return new Promise((resolve, reject) =>{
+    if (foo) resolve(foo);
+    else reject(foo);
+  });
+}
+
+const brake = new Brakes({timeout: 150});
+
+const slaveCircuit1 = brake.slaveCircuit(promiseCall);
+const slaveCircuit2 = brake.slaveCircuit(promiseCall);
+
+slaveCircuit1.exec('bar')
+  .then((result) =>{
+    console.log(`result: ${result}`);
+  })
+  .catch(err =>{
+    console.error(`error: ${err}`);
+  });
+
+// all stats are reported through the main brakes instance
+brake.on('snapshot', snapshot => {
+  console.log(`Stats received -> ${snapshot}`);
+});
+
+
+```
+
 ### Demonstration
 
 For a terminal based demonstration:
@@ -176,6 +212,9 @@ For a terminal based demonstration:
 **Hystrix Stream Demo**
 `npm install && node examples/hystrix-example.js`
 
+**Slave Circuits**
+`npm install && node examples/slave-circuit.js`
+
 ## Methods
 Method | Argument(s) | Returns | Description
 ---|---|---|---
@@ -184,6 +223,7 @@ getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
 exec|N/A|Promise|Executes the circuit
 fallback|function (must return promise or accept callback)|N/A|Registers a fallback function for the circuit
 healthCheck|function (must return promise or accept callback)|N/A|Registers a health check function for the circuit
+slaveCircuit|function (required), function (optional), opts (optional)|N/A| Create a new slave circuit that rolls up into the main circuit it is created under.
 on|eventName, function|N/A|Register an event listener
 destroy|N/A|N/A|Removes all listeners and deregisters with global stats tracker.
 isOpen|N/A|boolean|Returns `true` if circuit is open

@@ -33,7 +33,7 @@ function unreliableServiceCall() {
 
 
 const brake = new Brakes(unreliableServiceCall, {
-  statInterval: 5,
+  statInterval: 1000,
   threshold: 0.5,
   circuitDuration: 15000,
   timeout: 250
