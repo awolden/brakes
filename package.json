@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "node_modules/.bin/_mocha  $(find . -name '*.spec.js')",
-    "test:lint": "node_modules/eslint/bin/eslint.js ./  || exit 0",
+    "test:lint": "eslint .",
     "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- $(find . -name '*.spec.js')",
     "coveralls": "cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
     "coverage:win": "node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha ./tests/*.spec.js",
@@ -41,10 +41,8 @@
     "chai-things": "^0.2.0",
     "coveralls": "^2.11.12",
     "eslint": "^2.9.0",
-    "eslint-config-airbnb": "^9.0.1",
+    "eslint-config-airbnb-base": "^3.0.0",
     "eslint-plugin-import": "^1.7.0",
-    "eslint-plugin-jsx-a11y": "^1.2.0",
-    "eslint-plugin-react": "^5.1.1",
     "istanbul": "^0.4.3",
     "mocha": "^3.0.0",
     "sinon": "^1.17.3"
