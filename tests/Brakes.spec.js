@@ -263,7 +263,7 @@ describe('Brakes Class', () => {
   it('_setHealthInterval should emit error', done => {
     brake = new Brakes(nopr, {
       healthCheck: nopr.bind(null, null, 'thisisanerror'),
-      healthCheckInterval: 0
+      healthCheckInterval: 5
     });
 
     const eventSpy = sinon.spy(() => {});
@@ -272,12 +272,12 @@ describe('Brakes Class', () => {
     // check normal behavior
     brake._circuitOpen = true;
     brake._setHealthInterval();
-    setTimeout(() => {
+    brake.once('healthCheckFailed', () => {
       expect(eventSpy.called).to.equal(true);
       brake._close();
       clearInterval(brake._healthInterval);
       done();
-    }, 5);
+    });
   });
   it('_setHealthInterval should do nothing if interval is already set', () => {
     brake = new Brakes(nopr, {
