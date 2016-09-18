@@ -315,9 +315,10 @@ describe('Brakes Class', () => {
       done();
     }, 3);
   });
-  it('_open should open', done => {
+  it('_open should open', () => {
+    const clock = sinon.useFakeTimers();
     brake = new Brakes(nopr, {
-      circuitDuration: 10
+      circuitDuration: 5
     });
 
     const statsResetSpy = sinon.spy(brake._stats, 'reset');
@@ -337,11 +338,10 @@ describe('Brakes Class', () => {
     expect(brake._circuitOpen).to.equal(true);
     expect(eventSpy.calledOnce).to.equal(true);
 
-    setTimeout(() => {
-      expect(statsResetSpy.calledOnce).to.equal(true);
-      expect(openSpy.calledOnce).to.equal(true);
-      done();
-    }, 20);
+    clock.tick(6);
+    expect(statsResetSpy.calledOnce).to.equal(true);
+    expect(openSpy.calledOnce).to.equal(true);
+    clock.restore();
   });
   it('_close should close', () => {
     brake = new Brakes(nopr);
