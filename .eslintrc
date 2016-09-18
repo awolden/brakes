@@ -1,21 +1,17 @@
 {
   "extends": "airbnb-base",
-  "env": {
-    "mocha": true,
-    },
   "rules": {
-      "comma-dangle": 0,
-      "max-len": 0,
-      "brace-style" : [2, "stroustrup", {"allowSingleLine" : true}],
-      "no-console": 0,
-      "padded-blocks": 0,
-      "prefer-rest-params": 0,
-      "no-use-before-define": 0,
-      "strict": 0,
-      "no-param-reassign": 0,
-      "no-underscore-dangle": 0
-  },
-  "globals":{
-    "appRequire": true
+    "brace-style" : ["error", "stroustrup", {"allowSingleLine" : true}],
+    "arrow-parens" : ["error", "as-needed"],
+    "comma-dangle": "off",
+    "max-len": "off",
+    "prefer-rest-params": "off",
+    "no-use-before-define": "off",
+    "strict": "off",
+    "no-param-reassign": "off",
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off",
+    "no-plusplus": "off",
+    "prefer-spread": "off"
   }
 }

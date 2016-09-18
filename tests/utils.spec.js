@@ -5,7 +5,6 @@ const expect = require('chai').expect;
 
 
 describe('utils', () => {
-
   describe('hasCallback', () => {
     it('should return true', () => {
       // standard
@@ -48,7 +47,6 @@ describe('utils', () => {
       passed = utils.hasCallback(fakey.foo);
       expect(passed).to.equal(false);
     });
-
   });
   describe('getFnArgs', () => {
     it('should return a list of arguments', () => {
@@ -154,5 +152,4 @@ describe('utils', () => {
       });
     });
   });
-
 });

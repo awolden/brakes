@@ -2,11 +2,12 @@
 
 const Stats = require('../lib/Stats');
 const chai = require('chai');
-chai.use(require('chai-things'));
-const expect = chai.expect;
 const EventEmitter = require('events').EventEmitter;
 const Bucket = require('../lib/Bucket');
 const sinon = require('sinon');
+
+const expect = chai.expect;
+chai.use(require('chai-things'));
 
 const defaultOptions = {
   bucketSpan: 1000,
@@ -47,7 +48,7 @@ describe('Stats Class', () => {
     const stats = new Stats();
     expect(stats._activeBucket).to.equal(stats._buckets[stats._buckets.length - 1]);
   });
-  it('Should start bucket spinning automatically', (done) => {
+  it('Should start bucket spinning automatically', done => {
     const stats = new Stats({
       bucketSpan: 10
     });
@@ -65,7 +66,7 @@ describe('Stats Class', () => {
     // test 2nd call
     expect(stats._stopBucketSpinning()).to.equal(false);
   });
-  it('Should start stats snapshotting', (done) => {
+  it('Should start stats snapshotting', done => {
     const stats = new Stats();
     stats.startSnapshots(10);
     const spy = sinon.spy(stats, '_snapshot');
