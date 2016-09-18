@@ -257,23 +257,27 @@ describe('Brakes Class', () => {
     });
     expect(brake._healthCheck('foo').then).to.not.equal(undefined);
   });
-  it('_setHealthInterval should open', done => {
+  it('_setHealthInterval should close', done => {
+    const clock = sinon.useFakeTimers();
     brake = new Brakes(nopr, {
       healthCheck: hc,
-      healthCheckInterval: 1
+      healthCheckInterval: 15
     });
     const statsResetSpy = sinon.spy(brake._stats, 'reset');
-    const openSpy = sinon.spy(brake, '_close');
+    const closeSpy = sinon.spy(brake, '_close');
     // check normal behavior
     brake._circuitOpen = true;
     brake._setHealthInterval();
-    setTimeout(() => {
-      expect(statsResetSpy.called).to.equal(true);
-      expect(openSpy.called).to.equal(true);
-      brake._close();
+
+    brake.on('circuitClosed', () => {
+      expect(statsResetSpy.calledOnce).to.equal(true);
+      expect(closeSpy.calledOnce).to.equal(true);
       clearInterval(brake._healthInterval);
       done();
-    }, 5);
+    });
+
+    clock.tick(15);
+    clock.restore();
   });
   it('_setHealthInterval should emit error', done => {
     brake = new Brakes(nopr, {
