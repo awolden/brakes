@@ -23,14 +23,14 @@ const nopr = function nopr(foo, err) {
   });
 };
 const slowpr = function slowpr(foo) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve(foo);
     }, 50);
   });
 };
 const fbpr = function fallback(foo, err) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     resolve(foo || err);
   });
 };
@@ -56,14 +56,14 @@ describe('Circuit Class', () => {
   it('Should promisify the service func', () => {
     brake = new Brakes(noop);
     const circuit = new Circuit(brake, noop);
-    return circuit._serviceCall('test').then((result) => {
+    return circuit._serviceCall('test').then(result => {
       expect(result).to.equal('test');
     });
   });
   it('Should promisify and reject service func', () => {
     brake = new Brakes(noop);
     const circuit = new Circuit(brake, noop);
-    return circuit._serviceCall(null, 'err').then(null, (err) => {
+    return circuit._serviceCall(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
       expect(err.message).to.equal('err');
     });
@@ -71,14 +71,14 @@ describe('Circuit Class', () => {
   it('Should accept a promise', () => {
     brake = new Brakes(nopr);
     const circuit = new Circuit(brake, nopr);
-    return circuit._serviceCall('test').then((result) => {
+    return circuit._serviceCall('test').then(result => {
       expect(result).to.equal('test');
     });
   });
   it('Should reject a promise', () => {
     brake = new Brakes(nopr);
     const circuit = new Circuit(brake, nopr);
-    return circuit._serviceCall(null, 'err').then(null, (err) => {
+    return circuit._serviceCall(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
       expect(err.message).to.equal('err');
     });

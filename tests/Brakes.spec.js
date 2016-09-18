@@ -46,19 +46,19 @@ const nopr = function nopr(foo, err) {
   });
 };
 const slowpr = function slowpr(foo) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(() => {
       resolve(foo);
     }, 50);
   });
 };
 const fbpr = function fallback(foo, err) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     resolve(foo || err);
   });
 };
 const hc = function healthCheck(foo, err) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     resolve(foo || err);
   });
 };
@@ -94,19 +94,19 @@ describe('Brakes Class', () => {
     catch (e) {
       expect(e).to.be.an('error');
     }
-    return brake.exec('test').then(null, (err) => {
+    return brake.exec('test').then(null, err => {
       expect(err).to.be.an('error');
     });
   });
   it('Should promisify the service func', () => {
     brake = new Brakes(noop);
-    return brake.exec('test').then((result) => {
+    return brake.exec('test').then(result => {
       expect(result).to.equal('test');
     });
   });
   it('Should promisify and reject service func', () => {
     brake = new Brakes(noop);
-    return brake.exec(null, 'err').then(null, (err) => {
+    return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
       expect(err.message).to.equal('err');
     });
@@ -114,13 +114,13 @@ describe('Brakes Class', () => {
 
   it('Should accept a promise', () => {
     brake = new Brakes(nopr);
-    return brake.exec('test').then((result) => {
+    return brake.exec('test').then(result => {
       expect(result).to.equal('test');
     });
   });
   it('Should reject a promise', () => {
     brake = new Brakes(nopr);
-    return brake.exec(null, 'err').then(null, (err) => {
+    return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
       expect(err.message).to.equal('err');
     });
@@ -224,7 +224,7 @@ describe('Brakes Class', () => {
       expect(result).to.equal('thisShouldFailFirstCall');
     });
   });
-  it('Should close circuit if _setHealthInterval is called with successful health check', (done) => {
+  it('Should close circuit if _setHealthInterval is called with successful health check', done => {
     brake = new Brakes(nopr, {
       healthCheckInterval: 1
     });
@@ -257,7 +257,7 @@ describe('Brakes Class', () => {
     });
     expect(brake._healthCheck('foo').then).to.not.equal(undefined);
   });
-  it('_setHealthInterval should open', (done) => {
+  it('_setHealthInterval should open', done => {
     brake = new Brakes(nopr, {
       healthCheck: hc,
       healthCheckInterval: 1
@@ -275,7 +275,7 @@ describe('Brakes Class', () => {
       done();
     }, 5);
   });
-  it('_setHealthInterval should emit error', (done) => {
+  it('_setHealthInterval should emit error', done => {
     brake = new Brakes(nopr, {
       healthCheck: nopr.bind(null, null, 'thisisanerror'),
       healthCheckInterval: 0
@@ -303,7 +303,7 @@ describe('Brakes Class', () => {
     brake._setHealthInterval();
     expect(brake._healthInterval).to.equal('foo');
   });
-  it('_setHealthInterval should clearInterval, if circuit is opened', (done) => {
+  it('_setHealthInterval should clearInterval, if circuit is opened', done => {
     brake = new Brakes(nopr, {
       healthCheck: hc,
       healthCheckInterval: 0
@@ -315,7 +315,7 @@ describe('Brakes Class', () => {
       done();
     }, 3);
   });
-  it('_open should open', (done) => {
+  it('_open should open', done => {
     brake = new Brakes(nopr, {
       circuitDuration: 10
     });
@@ -342,7 +342,6 @@ describe('Brakes Class', () => {
       expect(openSpy.calledOnce).to.equal(true);
       done();
     }, 20);
-
   });
   it('_close should close', () => {
     brake = new Brakes(nopr);
@@ -353,7 +352,7 @@ describe('Brakes Class', () => {
     expect(brake._circuitOpen).to.equal(false);
     expect(eventSpy.calledOnce).to.equal(true);
   });
-  it('_snapshotHandler should transform stats object and emit', (done) => {
+  it('_snapshotHandler should transform stats object and emit', done => {
     brake = new Brakes(nopr, {
       name: 'brake1',
       group: 'brakeGroup1',

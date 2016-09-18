@@ -7,7 +7,6 @@ const sinon = require('sinon');
 const utils = require('../lib/utils');
 
 describe('globalStats', () => {
-
   it('should construct appropriately', () => {
     expect(globalStats._rawStream).to.be.instanceof(stream.Readable);
     expect(globalStats._rawStream._read).to.be.a('function');
@@ -56,11 +55,11 @@ describe('globalStats', () => {
     globalStats._rawStream.push.restore();
   });
 
-  it('_transformToHysterix() should transform to hysterix', (done) => {
+  it('_transformToHysterix() should transform to hysterix', done => {
     const mock = {
       foo: 'bar'
     };
-    const stub = sinon.stub(utils, 'mapToHystrixJson', (data) => data);
+    const stub = sinon.stub(utils, 'mapToHystrixJson', data => data);
     globalStats._transformToHysterix(JSON.stringify(mock), null, (err, data) => {
       expect(stub.calledOnce).to.equal(true);
       expect(data).to.equal(`data: ${JSON.stringify(mock)}\n\n`);
@@ -75,6 +74,5 @@ describe('globalStats', () => {
 
   it('getHystrixStream() should return hysterixStream stream', () => {
     expect(globalStats.getHystrixStream()).to.equal(globalStats._hystrixStream);
-
   });
 });
