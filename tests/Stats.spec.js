@@ -48,16 +48,16 @@ describe('Stats Class', () => {
     const stats = new Stats();
     expect(stats._activeBucket).to.equal(stats._buckets[stats._buckets.length - 1]);
   });
-  it('Should start bucket spinning automatically', done => {
+  it('Should start bucket spinning automatically', () => {
+    const clock = sinon.useFakeTimers();
     const stats = new Stats({
       bucketSpan: 10
     });
     const spy = sinon.spy(stats, '_shiftAndPush');
-    setTimeout(() => {
-      expect(spy.calledOnce).to.equal(true);
-      done();
-    }, 15);
+    clock.tick(11);
+    expect(spy.calledOnce).to.equal(true);
     expect(stats._spinningInterval).to.be.a('object');
+    clock.restore();
   });
   it('Should stop bucket spinning', () => {
     const stats = new Stats();
@@ -66,15 +66,15 @@ describe('Stats Class', () => {
     // test 2nd call
     expect(stats._stopBucketSpinning()).to.equal(false);
   });
-  it('Should start stats snapshotting', done => {
+  it('Should start stats snapshotting', () => {
+    const clock = sinon.useFakeTimers();
     const stats = new Stats();
     stats.startSnapshots(10);
     const spy = sinon.spy(stats, '_snapshot');
-    setTimeout(() => {
-      expect(spy.calledOnce).to.equal(true);
-      done();
-    }, 15);
+    clock.tick(11);
+    expect(spy.calledOnce).to.equal(true);
     expect(stats._snapshotInterval).to.be.a('object');
+    clock.restore();
   });
   it('Should stop stats snapshotting', () => {
     const stats = new Stats();
