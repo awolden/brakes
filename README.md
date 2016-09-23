@@ -312,6 +312,8 @@ globalStats.getRawStream().on('data', (stats) =>{
 
 Using the global stats stream with a special transform, brakes makes it incredibly easy to generate a SSE stream that is compliant with the hystrix dashboard and turbine.
 
+[![monitorer](images/hystrix.gif)
+
 **Example:**
 ```javascript
 const globalStats = Brakes.getGlobalStats();
@@ -333,7 +335,7 @@ http.createServer((req, res) => {
 
 To aid in testing it might be useful to have a local instance of the hystrix dashboard running:
 
-`docker run -d -p 8080:8080 --name hystrix-dashboard mlabouardy/hystrix-dashboard:latest`
+`docker run -d -p 8080:8080 -p 9002:9002 --name hystrix-dashboard mlabouardy/hystrix-dashboard:latest`
 
 
 Additional Reading: [Hystrix Metrics Event Stream](https://github.com/Netflix/Hystrix/tree/master/hystrix-contrib/hystrix-metrics-event-stream), [Turbine](https://github.com/Netflix/Turbine/wiki), [Hystrix Dashboard](https://github.com/Netflix/Hystrix/wiki/Dashboard)

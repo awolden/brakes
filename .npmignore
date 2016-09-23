@@ -1,7 +1,12 @@
-test/
+tests/
+images/
+examples/
+coverage/
 .eslintignore
 .eslintrc
 .istanbul.yml
 .jsbeautifyrc
 .travis.yml
+.bithoundrc
+.codeclimate.yml
 .nvmrc
