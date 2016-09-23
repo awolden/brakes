@@ -12,7 +12,7 @@
 brakes
 ===
 
-A circuit breaker pattern for nodejs. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will trip an internal circuit if it begins to detect that the remote service is beginning to fail. This module is largely based on Netflix's [Hystrix](https://github.com/Netflix/Hystrix)
+Brakes is a circuit breaker library for Node. A circuit breaker provides latency and fault protection for distributed systems. Brakes will monitor your outgoing requests, and will trip an internal circuit if it begins to detect that the remote service is failing. Circuit protection allows you to redirect requests to sane fallbacks, and back-off the downstream services so they can recover. This module is largely based on Netflix's [Hystrix](https://github.com/Netflix/Hystrix)
 
 **Requires Node 4.2.0 or higher**
 
@@ -312,7 +312,7 @@ globalStats.getRawStream().on('data', (stats) =>{
 
 Using the global stats stream with a special transform, brakes makes it incredibly easy to generate a SSE stream that is compliant with the hystrix dashboard and turbine.
 
-[![monitorer](images/hystrix.gif)
+![monitorer](images/hystrix.gif)
 
 **Example:**
 ```javascript
