@@ -3,6 +3,10 @@
   "version": "2.2.0",
   "description": "Node.js Circuit Breaker Pattern",
   "main": "index.js",
+  "files": [
+    "lib/",
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/awolden/brakes.git"
