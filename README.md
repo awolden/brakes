@@ -36,6 +36,7 @@ Brakes is a circuit breaker library for Node. A circuit breaker provides latency
 - [Stats](#stats)
 - [Hystrix Dashboard](#hystrix-dashboard)
 - [Development](#development)
+- [Change Log](#change-log)
 
 ### Bluebird and Promisify
 
@@ -353,6 +354,10 @@ npm run test
 npm run test:lint
 npm run coverage
 ```
+
+## Change Log
+
+See: https://github.com/awolden/brakes/releases
 
 ---
 Copyright (c) 2016
