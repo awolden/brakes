@@ -231,6 +231,7 @@ isOpen|N/A|boolean|Returns `true` if circuit is open
 ## Events
   Every brake is an instance of `EventEmitter` that provides the following events:
 
+  - **exec**: Event on request start
   - **failure**: Event on request failure
   - **success**: Event on request success
   - **timeout**: Event on request timeout
