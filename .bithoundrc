@@ -4,6 +4,7 @@
     "**/deps/**",
     "**/node_modules/**",
     "**/tests/**",
+    "**/test/**",
     "**/thirdparty/**",
     "**/third_party/**",
     "**/vendor/**",
