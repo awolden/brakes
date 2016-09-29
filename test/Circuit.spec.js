@@ -111,6 +111,16 @@ describe('Circuit Class', () => {
       circuit.test();
     }).to.throw();
   });
+  it('Should trigger event on exec', () => {
+    brake = new Brakes(nopr);
+    const circuit = new Circuit(brake, nopr);
+    const spy = sinon.spy(() => {});
+    brake.on('exec', spy);
+    return circuit.exec('foo').then(result => {
+      expect(result).to.equal('foo');
+      expect(spy.calledOnce).to.equal(true);
+    });
+  });
   it('Should Resolve a service call and trigger event', () => {
     brake = new Brakes(nopr);
     const circuit = new Circuit(brake, nopr);
