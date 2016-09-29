@@ -8,12 +8,10 @@
     "url": "https://github.com/awolden/brakes.git"
   },
   "scripts": {
-    "test": "node_modules/.bin/_mocha  $(find . -name '*.spec.js')",
+    "test": "mocha",
     "test:lint": "eslint .",
-    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- $(find . -name '*.spec.js')",
-    "coveralls": "cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "coverage:win": "node_modules/.bin/istanbul cover node_modules/mocha/bin/_mocha ./tests/*.spec.js",
-    "test:win": "node_modules/.bin/_mocha ./tests/*.spec.js"
+    "coverage": "nyc --reporter lcov --reporter text npm test",
+    "coveralls": "cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   },
   "keywords": [
     "circuit",
@@ -26,9 +24,7 @@
     "ignore": [
       "eslint",
       "eslint-config-airbnb",
-      "eslint-plugin-import",
-      "eslint-plugin-jsx-a11y",
-      "eslint-plugin-react"
+      "eslint-plugin-import"
     ]
   },
   "author": "Alex Wolden <awolden@gmail.com>",
@@ -43,8 +39,8 @@
     "eslint": "^3.5.0",
     "eslint-config-airbnb-base": "^7.1.0",
     "eslint-plugin-import": "^1.15.0",
-    "istanbul": "^0.4.5",
     "mocha": "^3.0.2",
+    "nyc": "^8.3.0",
     "sinon": "^1.17.5"
   }
 }
