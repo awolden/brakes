@@ -1,6 +1,7 @@
 'use strict';
 
 const Brakes = require('../lib/Brakes');
+
 const timer = 100;
 let successRate = 2;
 let iterations = 0;
@@ -23,13 +24,13 @@ function unreliableServiceCall() {
         resolve();
       }
       else {
-        reject("Service Unavailable");
+        reject('Service Unavailable');
       }
     }, timer);
   });
 }
 
-function anotherServiceCall(){
+function anotherServiceCall() {
   return Promise.resolve();
 }
 
@@ -37,11 +38,11 @@ const brake = new Brakes(unreliableServiceCall, {
   statInterval: 2500,
   threshold: 0.5,
   circuitDuration: 15000,
-  timeout: 250, 
+  timeout: 250,
   healthCheckInterval: 500
 });
 
-brake.on('snapshot', (snapshot) => {
+brake.on('snapshot', snapshot => {
   console.log('Running at:', snapshot.stats.successful / snapshot.stats.total);
   console.log(snapshot);
 });
@@ -56,23 +57,23 @@ brake.on('circuitClosed', () => {
 
 brake.on('healthCheckFailed', err => {
   console.log('--------Health check failed-----------', err || '');
-})
+});
 
 brake.fallback(() => {
-  console.log("Fallback");
+  console.log('Fallback');
   return Promise.resolve();
 });
 
 brake.healthCheck(() => {
-  console.log("checking health");
-  //in real world scenario, the health check should be done on a less load intensive way,
-  //like calling a function on server with the less data (like getting the version info),
-  //of trying to create a connection for mongodb
-  let healthCheckCalls = [unreliableServiceCall(), unreliableServiceCall(), anotherServiceCall()];
+  console.log('checking health');
+  // in real world scenario, the health check should be done on a less load intensive way,
+  // like calling a function on server with the less data (like getting the version info),
+  // of trying to create a connection for mongodb
+  const healthCheckCalls = [unreliableServiceCall(), unreliableServiceCall(), anotherServiceCall()];
 
-  //health criteria = 2 times successful service calls to unreliableServiceCall and one to anotherServiceCall
+  // health criteria = 2 times successful service calls to unreliableServiceCall and one to anotherServiceCall
   return Promise.all(healthCheckCalls)
-      .then(results => console.log("health check success " + results));
+      .then(results => console.log(`health check success ${results}`));
 });
 
 setInterval(() => {
@@ -80,9 +81,9 @@ setInterval(() => {
     .then(() => {
       console.log('Successful');
     })
-    .catch((err) => {
-      //this line should not be hit, as there is a fallback function
-      //(unless fallback is also failing)
+    .catch(err => {
+      // this line should not be hit, as there is a fallback function
+      // (unless fallback is also failing)
       console.log('Failure', err || '');
     });
 }, 100);
