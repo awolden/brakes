@@ -96,6 +96,7 @@ describe('utils', () => {
         errorPercentage: (stats.total) ? stats.failed / stats.total : 0,
         errorCount: stats.failed,
         requestCount: stats.total,
+        rollingCountBadRequests: 0, // not reported
         rollingCountCollapsedRequests: 0, // not reported
         rollingCountExceptionsThrown: 0, // not reported
         rollingCountFailure: stats.failed,
