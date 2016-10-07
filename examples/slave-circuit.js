@@ -1,6 +1,7 @@
 'use strict';
 
 const Brakes = require('../lib/Brakes');
+
 const timer = 100;
 let successRate = 2;
 let iterations = 0;
@@ -39,11 +40,11 @@ const brake = new Brakes({
   timeout: 250
 });
 
-//create slave circuits
+// create slave circuits
 const circuit1 = brake.slaveCircuit(unreliableServiceCall, { timeout: 500 });
 const circuit2 = brake.slaveCircuit(unreliableServiceCall, { timeout: 1000 });
 
-brake.on('snapshot', (snapshot) => {
+brake.on('snapshot', snapshot => {
   console.log('Running at:', snapshot.stats.successful / snapshot.stats.total);
   console.log(snapshot);
 });
@@ -61,7 +62,7 @@ setInterval(() => {
     .then(() => {
       console.log('C1 Succesful');
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('C1 Failure', err || '');
     });
 }, 100);
@@ -71,7 +72,7 @@ setInterval(() => {
     .then(() => {
       console.log('C2 Succesful');
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('C2 Failure', err || '');
     });
 }, 500);

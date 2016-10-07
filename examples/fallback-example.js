@@ -1,6 +1,7 @@
 'use strict';
 
 const Brakes = require('../lib/Brakes');
+
 const timer = 100;
 let successRate = 2;
 let iterations = 0;
@@ -38,7 +39,7 @@ const brake = new Brakes(unreliableServiceCall, {
   timeout: 250
 });
 
-brake.on('snapshot', (snapshot) => {
+brake.on('snapshot', snapshot => {
   console.log('Running at:', snapshot.stats.successful / snapshot.stats.total);
   console.log(snapshot);
 });
@@ -52,7 +53,7 @@ brake.on('circuitClosed', () => {
 });
 
 brake.fallback(() => {
-  console.log("Fallback");
+  console.log('Fallback');
   return Promise.resolve();
 });
 
@@ -61,7 +62,7 @@ setInterval(() => {
     .then(() => {
       console.log('Successful');
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('Failure', err || '');
     });
 }, 100);

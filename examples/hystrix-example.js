@@ -2,6 +2,7 @@
 
 const Brakes = require('../lib/Brakes');
 const http = require('http');
+
 const timer = 100;
 let successRate = 2;
 let iterations = 0;
