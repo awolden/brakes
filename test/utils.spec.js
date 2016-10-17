@@ -140,7 +140,7 @@ describe('utils', () => {
         propertyValue_circuitBreakerForceOpen: false, // not reported
         propertyValue_circuitBreakerForceClosed: false, // not reported
         propertyValue_circuitBreakerEnabled: true, // not reported
-        propertyValue_executionIsolationStrategy: 'SEMAPHORE', // not reported
+        propertyValue_executionIsolationStrategy: 'THREAD', // not reported
         propertyValue_executionIsolationThreadTimeoutInMilliseconds: 800, // not reported
         propertyValue_executionIsolationThreadInterruptOnTimeout: true, // not reported
         propertyValue_executionIsolationThreadPoolKeyOverride: null, // not reported
