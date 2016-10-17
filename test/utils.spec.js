@@ -93,7 +93,7 @@ describe('utils', () => {
         group: 'defaultBrakeGroup',
         currentTime: 1463292683341,
         isCircuitBreakerOpen: statsOutput.open,
-        errorPercentage: (stats.total) ? stats.failed / stats.total : 0,
+        errorPercentage: (stats.total) ? (1 - stats.successful / stats.total) * 100 : 0,
         errorCount: stats.failed,
         requestCount: stats.total,
         rollingCountBadRequests: 0, // not reported
