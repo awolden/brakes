@@ -7,6 +7,7 @@
     "max-len": 0,
     "prefer-rest-params": 0,
     "no-use-before-define": 0,
+    "no-mixed-operators": 0,
     "strict": 0,
     "no-param-reassign": 0,
     "no-underscore-dangle": 0,
