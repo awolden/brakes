@@ -193,4 +193,15 @@ describe('Circuit Class', () => {
       expect(err).to.be.instanceof(CircuitBrokenError);
     });
   });
+  it('Should not count as failure if `isFailure` returns `false`', () => {
+    brake = new Brakes(noop);
+    const circuit = new Circuit(brake, noop, { isFailure: () => false });
+    const spy = sinon.spy(() => {});
+    brake.on('failure', spy);
+    return circuit.exec(null, 'err').then(null, err => {
+      expect(err).to.be.instanceof(Error);
+      expect(err.message).to.equal('err');
+      expect(spy.called).to.equal(false);
+    });
+  });
 });
