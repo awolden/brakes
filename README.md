@@ -253,6 +253,7 @@ isOpen|N/A|boolean|Returns `true` if circuit is open
 - **waitThreshold**: `number` of requests to wait before testing circuit health
 - **threshold**: `%` threshold for successful calls. If the % of successful calls dips below this threshold the circuit will break
 - **timeout**: time in `ms` before a service call will timeout
+- **isFailure**: function that returns true if an error should be considered a failure (receives the error object returned by your command.) This allows for non-critical errors to be ignored by the circuit breaker
 - **healthCheckInterval**: time in `ms` interval between each execution of health check function
 - **healthCheck**: function to call for the health check (can be defined also with calling `healthCheck` function)
 - **fallback**: function to call for fallback (can be defined also with calling `fallback` function)
