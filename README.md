@@ -257,6 +257,8 @@ isOpen|N/A|boolean|Returns `true` if circuit is open
 - **healthCheckInterval**: time in `ms` interval between each execution of health check function
 - **healthCheck**: function to call for the health check (can be defined also with calling `healthCheck` function)
 - **fallback**: function to call for fallback (can be defined also with calling `fallback` function)
+- **isPromise**: `boolean` to opt out of check for callback in function. This affects the passed in function, health check and fallback
+- **isFunction**: `boolean` to opt out of check for callback, always promisifying in function. This affects the passed in function, health check and fallback
 
 ## Stats
 Based on the `opts.statInterval` an event will be fired at regular intervals that contains a snapshot of the running state of the application.
