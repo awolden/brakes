@@ -41,10 +41,10 @@
     "chai-things": "^0.2.0",
     "coveralls": "^2.11.14",
     "eslint": "^3.8.1",
-    "eslint-config-airbnb-base": "^9.0.0",
+    "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.0.1",
     "mocha": "^3.1.2",
-    "nyc": "^8.3.1",
+    "nyc": "^9.0.1",
     "sinon": "^1.17.6"
   }
 }

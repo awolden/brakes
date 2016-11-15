@@ -25,7 +25,9 @@ const defaultOptions = {
   timeout: 15000,
   healthCheckInterval: 5000,
   healthCheck: undefined,
-  fallback: undefined
+  fallback: undefined,
+  isFunction: false,
+  isPromise: false
 };
 
 const noop = function noop(foo, err, cb) {
@@ -159,7 +161,9 @@ describe('Brakes Class', () => {
       timeout: 100,
       healthCheckInterval: 1000,
       healthCheck: () => Promise.resolve(),
-      fallback: () => Promise.resolve()
+      fallback: () => Promise.resolve(),
+      isFunction: false,
+      isPromise: false
     };
     brake = new Brakes(noop, overrides);
     expect(brake._opts).to.deep.equal(overrides);
