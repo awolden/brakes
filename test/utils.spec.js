@@ -153,4 +153,37 @@ describe('utils', () => {
       });
     });
   });
+  describe('promisifyIfFunction', () => {
+    it('should return input if isPromise: true', () => {
+      // eslint-disable-next-line no-unused-vars
+      function cb(done) {}
+
+      expect(utils.promisifyIfFunction(cb, true)).to.be.equal(cb);
+    });
+
+    it('should return input promise', () => {
+      function cb() { return Promise.resolve(); }
+
+      expect(utils.promisifyIfFunction(cb, true)).to.be.equal(cb);
+    });
+
+    it('should promisify if isFunction: true, even if wrong name of argument', () => {
+      // eslint-disable-next-line no-unused-vars
+      function cb(foo) {}
+
+      const promisifyIfFunction = utils.promisifyIfFunction(cb, false, true);
+
+      // Hackish... Might only work with bluebird
+      expect(promisifyIfFunction.__isPromisified__).to.be.equal(true);
+    });
+
+    it('should promisify if is a callback', () => {
+      // eslint-disable-next-line no-unused-vars
+      function cb(done) {}
+
+      const promisifyIfFunction = utils.promisifyIfFunction(cb);
+
+      expect(promisifyIfFunction.__isPromisified__).to.be.equal(true);
+    });
+  });
 });
