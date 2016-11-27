@@ -140,6 +140,7 @@ describe('Circuit Class', () => {
       expect(err).to.be.instanceof(Error);
       expect(err.message).to.equal('err');
       expect(spy.calledOnce).to.equal(true);
+      expect(spy.getCall(0).args[1]).to.equal(err);
     });
   });
   it('Should timeout a service call and trigger event', () => {
@@ -150,6 +151,7 @@ describe('Circuit Class', () => {
     return circuit.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(TimeOutError);
       expect(spy.calledOnce).to.equal(true);
+      expect(spy.getCall(0).args[1]).to.equal(err);
     });
   });
   it('Should timeout a service call and trigger event (brake override)', () => {
