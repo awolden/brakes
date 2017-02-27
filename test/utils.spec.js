@@ -51,7 +51,7 @@ describe('utils', () => {
   describe('getFnArgs', () => {
     it('should return a list of arguments', () => {
       function foo(one, two, three, cb) {
-        one = two = three = cb;
+        one = two = three = cb; // eslint-disable-line
       }
       expect(utils.getFnArgs(foo)).to.eql(['one', 'two', 'three', 'cb']);
     });
