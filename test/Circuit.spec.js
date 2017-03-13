@@ -206,7 +206,7 @@ describe('Circuit Class', () => {
       expect(result).to.equal('thisShouldFailFirstCall');
     });
   });
-  it('Should reject error circuit is broken and no fallback', () => {
+  it('Should reject with error if circuit is open and has no fallback', () => {
     brake = new Brakes(nopr);
     const circuit = new Circuit(brake, nopr);
     brake._circuitOpen = true;
