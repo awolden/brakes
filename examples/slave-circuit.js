@@ -37,7 +37,10 @@ const brake = new Brakes({
   statInterval: 2500,
   threshold: 0.5,
   circuitDuration: 15000,
-  timeout: 250
+  timeout: 250,
+  fallback: () => {
+    console.log('fallback')
+  }
 });
 
 // create slave circuits
