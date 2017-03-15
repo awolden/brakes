@@ -172,6 +172,25 @@ describe('Circuit Class', () => {
       expect(result).to.equal('test');
     });
   });
+  it('Should call master fallback when circuit open if used in a slave context', () => {
+    brake = new Brakes({
+      fallback: () => Promise.resolve('fallback')
+    });
+    const circuit = brake.slaveCircuit(nopr);
+    brake._circuitOpen = true;
+    return circuit.exec('test').then(result => {
+      expect(result).to.equal('fallback');
+    });
+  });
+  it('Should call master fallback when request fails if used in a slave context', () => {
+    brake = new Brakes({
+      fallback: () => Promise.resolve('fallback')
+    });
+    const circuit = brake.slaveCircuit(nopr);
+    return circuit.exec(undefined, 'test').then(result => {
+      expect(result).to.equal('fallback');
+    });
+  });
   it('Fallback should cascade fail', () => {
     brake = new Brakes(nopr);
     const circuit = new Circuit(brake, nopr, noop);
@@ -187,7 +206,7 @@ describe('Circuit Class', () => {
       expect(result).to.equal('thisShouldFailFirstCall');
     });
   });
-  it('Should if circuit is broken and no fallback', () => {
+  it('Should reject with error if circuit is open and has no fallback', () => {
     brake = new Brakes(nopr);
     const circuit = new Circuit(brake, nopr);
     brake._circuitOpen = true;

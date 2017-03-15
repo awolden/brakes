@@ -37,7 +37,8 @@ const brake = new Brakes({
   statInterval: 2500,
   threshold: 0.5,
   circuitDuration: 15000,
-  timeout: 250
+  timeout: 250,
+  fallback: () => Promise.resolve('Fallback data')
 });
 
 // create slave circuits
@@ -59,8 +60,8 @@ brake.on('circuitClosed', () => {
 
 setInterval(() => {
   circuit1.exec()
-    .then(() => {
-      console.log('C1 Succesful');
+    .then(data => {
+      console.log(data || 'C1 Succesful');
     })
     .catch(err => {
       console.log('C1 Failure', err || '');
@@ -69,8 +70,8 @@ setInterval(() => {
 
 setInterval(() => {
   circuit2.exec()
-    .then(() => {
-      console.log('C2 Succesful');
+    .then(data => {
+      console.log(data || 'C2 Succesful');
     })
     .catch(err => {
       console.log('C2 Failure', err || '');
