@@ -39,6 +39,12 @@ describe('utils', () => {
       passed = utils.hasCallback(() => {});
       expect(passed).to.equal(false);
 
+      // anonymous, single arg fat arrow
+      passed = utils.hasCallback(foo =>
+        `${foo}bar`
+      );
+      expect(passed).to.equal(false);
+
       // class
       class FakeClass {
         foo() {}
