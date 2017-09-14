@@ -20,7 +20,10 @@ describe('utils', () => {
       expect(passed).to.equal(true);
 
       // anonymous, single arg fat arrow
-      passed = utils.hasCallback(callback => callback());
+      passed = utils.hasCallback(callback =>
+        callback()
+        // eslint-disable-next-line function-paren-newline
+      );
       expect(passed).to.equal(true);
 
       // class
@@ -44,7 +47,10 @@ describe('utils', () => {
       expect(passed).to.equal(false);
 
       // anonymous, single arg fat arrow
-      passed = utils.hasCallback(foo => `${foo}bar`);
+      passed = utils.hasCallback(foo =>
+        `${foo}bar`
+      // eslint-disable-next-line function-paren-newline
+      );
       expect(passed).to.equal(false);
 
       // class
