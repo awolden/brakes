@@ -24,7 +24,7 @@ function unreliableServiceCall() {
         resolve();
       }
       else {
-        reject('Service Unavailable');
+        reject(new Error('Service Unavailable'));
       }
     }, timer);
   });
@@ -73,7 +73,7 @@ brake.healthCheck(() => {
 
   // health criteria = 2 times successful service calls to unreliableServiceCall and one to anotherServiceCall
   return Promise.all(healthCheckCalls)
-      .then(results => console.log(`health check success ${results}`));
+    .then(results => console.log(`health check success ${results}`));
 });
 
 setInterval(() => {

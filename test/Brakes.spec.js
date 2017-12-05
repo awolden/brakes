@@ -391,7 +391,7 @@ describe('Brakes Class', () => {
     expect(Object.keys(brake._events).length).to.equal(expectedEvents.length);
 
     const deregisterStub = sinon.stub(globalStats, 'deregister');
-    const removeEventStub = sinon.stub(brake, 'removeAllListeners', () => true);
+    const removeEventStub = sinon.stub(brake, 'removeAllListeners').callsFake(() => true);
     brake.destroy();
     expect(deregisterStub.calledOnce).to.equal(true);
     expect(removeEventStub.callCount).to.equal(actualEvents.length);

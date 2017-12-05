@@ -22,6 +22,7 @@ describe('utils', () => {
       // anonymous, single arg fat arrow
       passed = utils.hasCallback(callback =>
         callback()
+        // eslint-disable-next-line function-paren-newline
       );
       expect(passed).to.equal(true);
 
@@ -48,6 +49,7 @@ describe('utils', () => {
       // anonymous, single arg fat arrow
       passed = utils.hasCallback(foo =>
         `${foo}bar`
+      // eslint-disable-next-line function-paren-newline
       );
       expect(passed).to.equal(false);
 

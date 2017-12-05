@@ -48,7 +48,7 @@ describe('globalStats', () => {
     const data = {
       foo: 'bar'
     };
-    const stub = sinon.stub(globalStats._rawStream, 'push', () => true);
+    const stub = sinon.stub(globalStats._rawStream, 'push').callsFake(() => true);
     globalStats._globalListener(data);
     expect(stub.calledOnce).to.equal(true);
     expect(stub.firstCall.args[0]).to.equal(JSON.stringify(data));
@@ -59,7 +59,7 @@ describe('globalStats', () => {
     const mock = {
       foo: 'bar'
     };
-    const stub = sinon.stub(utils, 'mapToHystrixJson', data => data);
+    const stub = sinon.stub(utils, 'mapToHystrixJson').callsFake(data => data);
     globalStats._transformToHysterix(JSON.stringify(mock), null, (err, data) => {
       expect(stub.calledOnce).to.equal(true);
       expect(data).to.equal(`data: ${JSON.stringify(mock)}\n\n`);
