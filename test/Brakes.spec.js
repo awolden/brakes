@@ -110,7 +110,7 @@ describe('Brakes Class', () => {
     brake = new Brakes(noop);
     return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] err');
     });
   });
 
@@ -124,7 +124,7 @@ describe('Brakes Class', () => {
     brake = new Brakes(nopr);
     return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] err');
     });
   });
   it('Throw an error if not passed a function', () => {
@@ -183,7 +183,7 @@ describe('Brakes Class', () => {
     brake.on('failure', spy);
     return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] err');
       expect(spy.calledOnce).to.equal(true);
     });
   });
