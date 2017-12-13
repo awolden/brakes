@@ -110,7 +110,7 @@ describe('Brakes Class', () => {
     brake = new Brakes(noop);
     return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] err');
     });
   });
 
@@ -124,7 +124,7 @@ describe('Brakes Class', () => {
     brake = new Brakes(nopr);
     return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] err');
     });
   });
   it('Throw an error if not passed a function', () => {
@@ -183,7 +183,7 @@ describe('Brakes Class', () => {
     brake.on('failure', spy);
     return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] err');
       expect(spy.calledOnce).to.equal(true);
     });
   });
@@ -324,6 +324,7 @@ describe('Brakes Class', () => {
     brake._circuitOpen = false;
     brake._open();
 
+    expect(brake._circuitGeneration).to.equal(2);
     expect(brake._circuitOpen).to.equal(true);
     expect(eventSpy.calledOnce).to.equal(true);
 
@@ -402,6 +403,22 @@ describe('Brakes Class', () => {
     brake = new Brakes(nopr);
     expect(brake.getGlobalStats()).to.equal(globalStats);
     expect(Brakes.getGlobalStats()).to.equal(globalStats);
+  });
+  it('_failureHandler should not register a stats failure if generations do not match', () => {
+    brake = new Brakes(nopr);
+    sinon.stub(brake._stats, 'failure');
+    brake._circuitGeneration = 20;
+    brake._failureHandler(100, 19);
+    expect(brake._stats.failure.callCount).to.equal(0);
+    brake._stats.failure.restore();
+  });
+  it('_timeoutHandler should not register a stats timeout if generations do not match', () => {
+    brake = new Brakes(nopr);
+    sinon.stub(brake._stats, 'timeout');
+    brake._circuitGeneration = 20;
+    brake._timeoutHandler(100, 19);
+    expect(brake._stats.timeout.callCount).to.equal(0);
+    brake._stats.timeout.restore();
   });
   it('_checkStats should not check when threshold isn\'t met', () => {
     brake = new Brakes(nopr);

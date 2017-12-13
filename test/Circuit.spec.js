@@ -138,7 +138,7 @@ describe('Circuit Class', () => {
     brake.on('failure', spy);
     return circuit.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] err');
       expect(spy.calledOnce).to.equal(true);
       expect(spy.getCall(0).args[1]).to.equal(err);
     });
@@ -210,8 +210,10 @@ describe('Circuit Class', () => {
     brake = new Brakes(nopr);
     const circuit = new Circuit(brake, nopr);
     brake._circuitOpen = true;
+    brake._failureHandler(100, 1);
     return circuit.exec('test').then(null, err => {
       expect(err).to.be.instanceof(CircuitBrokenError);
+      expect(err.message).to.equal('[Breaker: defaultBrake] Circuit has been opened - The percentage of failed requests (100%) is greater than the threshold specified (50%)');
     });
   });
   it('Should not count as failure if `isFailure` returns `false`', () => {
@@ -221,7 +223,7 @@ describe('Circuit Class', () => {
     brake.on('failure', spy);
     return circuit.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] err');
       expect(spy.called).to.equal(false);
     });
   });

@@ -3,7 +3,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/awolden/brakes/badge.svg?branch=master)](https://coveralls.io/github/awolden/brakes?branch=master)
 [![npm version](https://badge.fury.io/js/brakes.svg)](https://badge.fury.io/js/brakes)
 [![Code Climate](https://codeclimate.com/github/awolden/brakes/badges/gpa.svg)](https://codeclimate.com/github/awolden/brakes)
-[![bitHound Overall Score](https://www.bithound.io/github/awolden/brakes/badges/score.svg)](https://www.bithound.io/github/awolden/brakes)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/awolden/brakes/issues)
 [![badges](https://img.shields.io/:badges-8/8-32B90E.svg)](https://img.shields.io/:badges-8/8-32B90E.svg)
 
@@ -178,7 +177,7 @@ function promiseCall(foo){
 
 const brake = new Brakes({
   timeout: 150,
-  fallback: () => Promise.resolve('Response from fallback');
+  fallback: () => Promise.resolve('Response from fallback'),
 });
 
 const slaveCircuit1 = brake.slaveCircuit(promiseCall);
@@ -223,7 +222,7 @@ For a terminal based demonstration:
 Method | Argument(s) | Returns | Description
 ---|---|---|---
 getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
-*static* getGlobalStats|globalStats|N/A|Returns a reference to the global stats tracker
+*static* getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
 exec|N/A|Promise|Executes the circuit
 fallback|function (must return promise or accept callback)|N/A|Registers a fallback function for the circuit
 healthCheck|function (must return promise or accept callback)|N/A|Registers a health check function for the circuit
