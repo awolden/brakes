@@ -210,7 +210,7 @@ describe('Circuit Class', () => {
     brake = new Brakes(nopr);
     const circuit = new Circuit(brake, nopr);
     brake._circuitOpen = true;
-    brake._failureHandler(100);
+    brake._failureHandler(100, 1);
     return circuit.exec('test').then(null, err => {
       expect(err).to.be.instanceof(CircuitBrokenError);
       expect(err.message).to.equal('[Breaker: defaultBrake] Circuit has been opened - The percentage of failed requests (100%) is greater than the threshold specified (50%)');
