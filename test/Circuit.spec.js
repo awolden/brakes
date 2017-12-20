@@ -138,7 +138,7 @@ describe('Circuit Class', () => {
     brake.on('failure', spy);
     return circuit.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('[Breaker: defaultBrake] err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] "err"');
       expect(spy.calledOnce).to.equal(true);
       expect(spy.getCall(0).args[1]).to.equal(err);
     });
@@ -223,7 +223,7 @@ describe('Circuit Class', () => {
     brake.on('failure', spy);
     return circuit.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
-      expect(err.message).to.equal('[Breaker: defaultBrake] err');
+      expect(err.message).to.equal('[Breaker: defaultBrake] "err"');
       expect(spy.called).to.equal(false);
     });
   });
