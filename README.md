@@ -178,7 +178,7 @@ function promiseCall(foo){
 
 const brake = new Brakes({
   timeout: 150,
-  fallback: () => Promise.resolve('Response from fallback');
+  fallback: () => Promise.resolve('Response from fallback'),
 });
 
 const slaveCircuit1 = brake.slaveCircuit(promiseCall);
