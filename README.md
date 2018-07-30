@@ -223,7 +223,7 @@ For a terminal based demonstration:
 Method | Argument(s) | Returns | Description
 ---|---|---|---
 getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
-*static* getGlobalStats|globalStats|N/A|Returns a reference to the global stats tracker
+*static* getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
 exec|N/A|Promise|Executes the circuit
 fallback|function (must return promise or accept callback)|N/A|Registers a fallback function for the circuit
 healthCheck|function (must return promise or accept callback)|N/A|Registers a health check function for the circuit
