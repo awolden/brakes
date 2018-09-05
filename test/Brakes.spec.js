@@ -27,7 +27,8 @@ const defaultOptions = {
   healthCheck: undefined,
   fallback: undefined,
   isFunction: false,
-  isPromise: false
+  isPromise: false,
+  modifyError: true
 };
 
 const noop = function noop(foo, err, cb) {
@@ -163,7 +164,8 @@ describe('Brakes Class', () => {
       healthCheck: () => Promise.resolve(),
       fallback: () => Promise.resolve(),
       isFunction: false,
-      isPromise: false
+      isPromise: false,
+      modifyError: true
     };
     brake = new Brakes(noop, overrides);
     expect(brake._opts).to.deep.equal(overrides);
