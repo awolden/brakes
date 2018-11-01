@@ -31,6 +31,10 @@ const defaultOptions = {
   modifyError: true
 };
 
+const modifyError = function modifyError() {
+  throw { message: 'Not found' , status: 404 };
+}
+
 const noop = function noop(foo, err, cb) {
   if (typeof err === 'function') {
     cb = err;
@@ -112,6 +116,14 @@ describe('Brakes Class', () => {
     return brake.exec(null, 'err').then(null, err => {
       expect(err).to.be.instanceof(Error);
       expect(err.message).to.equal('[Breaker: defaultBrake] err');
+    });
+  });
+  it('Should not prefix error messages', () => {
+    brake = new Brakes(modifyError, {
+      modifyError: false,
+    });
+    return brake.exec(null).then(null, err => {
+      expect(err.message).to.equal('Not found');
     });
   });
 
