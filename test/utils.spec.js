@@ -97,7 +97,17 @@ describe('utils', () => {
             0.95: 102,
             0.99: 103,
             0.995: 103
-          }
+          },
+          countFailure: 0,
+          countFailureDeriv: 0,
+          countShortCircuited: 0,
+          countShortCircuitedDeriv: 0,
+          countSuccess: 0,
+          countSuccessDeriv: 0,
+          countTimeout: 0,
+          countTimeoutDeriv: 0,
+          countTotal: 0,
+          countTotalDeriv: 0,
         }
       };
       const stats = statsOutput.stats;
@@ -163,7 +173,19 @@ describe('utils', () => {
         propertyValue_metricsRollingStatisticalWindowInMilliseconds: 10000, // todo
         propertyValue_requestCacheEnabled: false, // not reported
         propertyValue_requestLogEnabled: false, // not reported
-        reportingHosts: 1 // not reported
+        reportingHosts: 1, // not reported
+
+        countTotal: 0,
+        countSuccess: 0,
+        countFailure: 0,
+        countTimeout: 0,
+        countShortCircuited: 0,
+
+        countTotalDeriv: 0,
+        countSuccessDeriv: 0,
+        countFailureDeriv: 0,
+        countTimeoutDeriv: 0,
+        countShortCircuitedDeriv: 0,
       });
     });
   });
