@@ -113,14 +113,24 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }
+      },
+      countFailure: 0,
+      countFailureDeriv: 0,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 0,
+      countSuccessDeriv: 0,
+      countTimeout: 0,
+      countTimeoutDeriv: 0,
+      countTotal: 0,
+      countTotalDeriv: 0,
     });
   });
   it('Generate Complete Stats', () => {
     const stats = new Stats();
     const buckets = [
-      new Bucket(),
-      new Bucket()
+      new Bucket(stats.getCummulateiveSatistics()),
+      new Bucket(stats.getCummulateiveSatistics())
     ];
     buckets[0].failure(145);
     buckets[1].failure(234);
@@ -145,7 +155,17 @@ describe('Stats Class', () => {
         0.95: 1234,
         0.99: 1234,
         0.995: 1234
-      }
+      },
+      countFailure: 2,
+      countFailureDeriv: 2,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 2,
+      countSuccessDeriv: 2,
+      countTimeout: 2,
+      countTimeoutDeriv: 2,
+      countTotal: 6,
+      countTotalDeriv: 6,
     });
     expect(stats._totals).to.deep.equal({
       total: 6,
@@ -164,7 +184,17 @@ describe('Stats Class', () => {
         0.95: 1234,
         0.99: 1234,
         0.995: 1234
-      }
+      },
+      countFailure: 2,
+      countFailureDeriv: 2,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 2,
+      countSuccessDeriv: 2,
+      countTimeout: 2,
+      countTimeoutDeriv: 2,
+      countTotal: 6,
+      countTotalDeriv: 6,
     });
   });
   it('_update should emit an event', () => {
@@ -190,7 +220,17 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }
+      }, 
+      countFailure: 0,
+      countFailureDeriv: 0,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 0,
+      countSuccessDeriv: 0,
+      countTimeout: 0,
+      countTimeoutDeriv: 0,
+      countTotal: 0,
+      countTotalDeriv: 0,
     });
   });
   it('Should increment failure and call update', () => {
@@ -216,7 +256,17 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }
+      }, 
+      countFailure: 1,
+      countFailureDeriv: 1,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 0,
+      countSuccessDeriv: 0,
+      countTimeout: 0,
+      countTimeoutDeriv: 0,
+      countTotal: 1,
+      countTotalDeriv: 1,
     });
   });
   it('Should increment shortCircuit', () => {
@@ -242,7 +292,17 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }
+      }, 
+      countFailure: 0,
+      countFailureDeriv: 0,
+      countShortCircuited: 1,
+      countShortCircuitedDeriv: 1,
+      countSuccess: 0,
+      countSuccessDeriv: 0,
+      countTimeout: 0,
+      countTimeoutDeriv: 0,
+      countTotal: 0,
+      countTotalDeriv: 0,
     });
   });
   it('Should increment success and call update', () => {
@@ -268,7 +328,17 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }
+      }, 
+      countFailure: 0,
+      countFailureDeriv: 0,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 1,
+      countSuccessDeriv: 1,
+      countTimeout: 0,
+      countTimeoutDeriv: 0,
+      countTotal: 1,
+      countTotalDeriv: 1,
     });
   });
   it('Should increment timedOut and call update', () => {
@@ -294,7 +364,17 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }
+      }, 
+      countFailure: 0,
+      countFailureDeriv: 0,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 0,
+      countSuccessDeriv: 0,
+      countTimeout: 1,
+      countTimeoutDeriv: 1,
+      countTotal: 1,
+      countTotalDeriv: 1,
     });
   });
   it('_snapshot should trigger event', () => {
@@ -321,7 +401,17 @@ describe('Stats Class', () => {
         0.95: 100,
         0.99: 100,
         0.995: 100
-      }
+      }, 
+      countFailure: 0,
+      countFailureDeriv: 0,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 0,
+      countSuccessDeriv: 0,
+      countTimeout: 1,
+      countTimeoutDeriv: 1,
+      countTotal: 1,
+      countTotalDeriv: 1,
     });
   });
   it('_shiftAndPush should shift and push', () => {
@@ -354,7 +444,17 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }
+      }, 
+      countFailure: 0,
+      countFailureDeriv: 0,
+      countShortCircuited: 0,
+      countShortCircuitedDeriv: 0,
+      countSuccess: 0,
+      countSuccessDeriv: 0,
+      countTimeout: 1,
+      countTimeoutDeriv: 1,
+      countTotal: 1,
+      countTotalDeriv: 1,
     });
   });
 });
