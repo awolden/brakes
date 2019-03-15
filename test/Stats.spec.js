@@ -220,7 +220,7 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }, 
+      },
       countFailure: 0,
       countFailureDeriv: 0,
       countShortCircuited: 0,
@@ -256,7 +256,7 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }, 
+      },
       countFailure: 1,
       countFailureDeriv: 1,
       countShortCircuited: 0,
@@ -292,7 +292,7 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }, 
+      },
       countFailure: 0,
       countFailureDeriv: 0,
       countShortCircuited: 1,
@@ -328,7 +328,7 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }, 
+      },
       countFailure: 0,
       countFailureDeriv: 0,
       countShortCircuited: 0,
@@ -364,7 +364,7 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }, 
+      },
       countFailure: 0,
       countFailureDeriv: 0,
       countShortCircuited: 0,
@@ -401,7 +401,7 @@ describe('Stats Class', () => {
         0.95: 100,
         0.99: 100,
         0.995: 100
-      }, 
+      },
       countFailure: 0,
       countFailureDeriv: 0,
       countShortCircuited: 0,
@@ -444,7 +444,7 @@ describe('Stats Class', () => {
         0.95: 0,
         0.99: 0,
         0.995: 0
-      }, 
+      },
       countFailure: 0,
       countFailureDeriv: 0,
       countShortCircuited: 0,

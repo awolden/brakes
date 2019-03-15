@@ -7,7 +7,9 @@ describe('Bucket Class', () => {
   let bucket;
 
   beforeEach(() => {
-    bucket = new Bucket({ countTotal: 0, countTotalDeriv: 0, countSuccess: 0, countSuccessDeriv: 0, countFailure: 0, countFailureDeriv: 0, countTimeout: 0, countTimeoutDeriv: 0, countShortCircuited: 0, countShortCircuitedDeriv: 0 });
+    bucket = new Bucket(
+      { countTotal: 0, countTotalDeriv: 0, countSuccess: 0, countSuccessDeriv: 0, countFailure: 0, countFailureDeriv: 0, countTimeout: 0, countTimeoutDeriv: 0, countShortCircuited: 0, countShortCircuitedDeriv: 0 }
+    );
   });
 
   it('Should be instantied with all empty values', () => {
