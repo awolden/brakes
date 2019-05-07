@@ -261,6 +261,7 @@ isOpen|N/A|boolean|Returns `true` if circuit is open
 - **fallback**: function to call for fallback (can be defined also with calling `fallback` function)
 - **isPromise**: `boolean` to opt out of check for callback in function. This affects the passed in function, health check and fallback
 - **isFunction**: `boolean` to opt out of check for callback, always promisifying in function. This affects the passed in function, health check and fallback
+- **modifyError**: modifies the error message by adding circuit name. default is true.
 
 ## Stats
 Based on the `opts.statInterval` an event will be fired at regular intervals that contains a snapshot of the running state of the application.
