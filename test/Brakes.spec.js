@@ -27,7 +27,12 @@ const defaultOptions = {
   healthCheck: undefined,
   fallback: undefined,
   isFunction: false,
-  isPromise: false
+  isPromise: false,
+  modifyError: true
+};
+
+const modifyError = function modifyError() {
+  throw new Error('Not found');
 };
 
 const noop = function noop(foo, err, cb) {
@@ -113,6 +118,14 @@ describe('Brakes Class', () => {
       expect(err.message).to.equal('[Breaker: defaultBrake] err');
     });
   });
+  it('Should not prefix error messages', () => {
+    brake = new Brakes(modifyError, {
+      modifyError: false,
+    });
+    return brake.exec(null).then(null, err => {
+      expect(err.message).to.equal('Not found');
+    });
+  });
 
   it('Should accept a promise', () => {
     brake = new Brakes(nopr);
@@ -163,7 +176,8 @@ describe('Brakes Class', () => {
       healthCheck: () => Promise.resolve(),
       fallback: () => Promise.resolve(),
       isFunction: false,
-      isPromise: false
+      isPromise: false,
+      modifyError: true
     };
     brake = new Brakes(noop, overrides);
     expect(brake._opts).to.deep.equal(overrides);
