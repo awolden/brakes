@@ -93,7 +93,7 @@ describe('Brakes Class', () => {
     brake = new Brakes({
       name: 'foo'
     });
-    expect(brake._masterCircuit).to.equal(undefined);
+    expect(brake._mainCircuit).to.equal(undefined);
     expect(brake._opts.name).to.equal('foo');
     try {
       brake.fallback();
@@ -248,7 +248,7 @@ describe('Brakes Class', () => {
       fallback: fbpr
     });
     expect(brake._healthCheck).to.equal(hc);
-    expect(brake._masterCircuit._fallback).to.equal(fbpr);
+    expect(brake._mainCircuit._fallback).to.equal(fbpr);
   });
   it('Should accept a health check function that is async', () => {
     brake = new Brakes(nopr, {
@@ -487,9 +487,9 @@ describe('Brakes Class', () => {
     });
     expect(spy.calledOnce).to.equal(true);
   });
-  it('Should be able to create Slave Circuit', () => {
+  it('Should be able to create Sub Circuit', () => {
     brake = new Brakes(noop);
-    const circuit = brake.slaveCircuit(noop);
+    const circuit = brake.subCircuit(noop);
     expect(circuit).to.be.instanceof(Circuit);
   });
 });

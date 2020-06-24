@@ -32,7 +32,7 @@ function unreliableServiceCall() {
 }
 
 
-// Create a master brakes instance with no main function
+// Create a main brakes instance with no main function
 const brake = new Brakes({
   statInterval: 2500,
   threshold: 0.5,
@@ -41,9 +41,9 @@ const brake = new Brakes({
   fallback: () => Promise.resolve('Fallback data')
 });
 
-// create slave circuits
-const circuit1 = brake.slaveCircuit(unreliableServiceCall, { timeout: 500 });
-const circuit2 = brake.slaveCircuit(unreliableServiceCall, { timeout: 1000 });
+// create sub circuits
+const circuit1 = brake.subCircuit(unreliableServiceCall, { timeout: 500 });
+const circuit2 = brake.subCircuit(unreliableServiceCall, { timeout: 1000 });
 
 brake.on('snapshot', snapshot => {
   console.log('Running at:', snapshot.stats.successful / snapshot.stats.total);

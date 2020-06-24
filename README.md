@@ -22,20 +22,22 @@ Brakes is a circuit breaker library for Node. A circuit breaker provides latency
 [https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern](https://en.wikipedia.org/wiki/Circuit_breaker_design_pattern)
 
 ---
-- [Bluebird and Promisify](#bluebird-and-promisify)
-- [Examples](#examples)
-  - [Promise](#promise)
-  - [Callback](#callback)
-  - [Fallback](#fallback)
-  - [Health Check](#health-check)
-  - [Slave Circuits](#slave-circuits)
-- [Methods](#methods)
-- [Events](#events)
-- [Configuration](#configuration)
-- [Stats](#stats)
-- [Hystrix Dashboard](#hystrix-dashboard)
-- [Development](#development)
-- [Change Log](#change-log)
+- [brakes](#brakes)
+    - [Bluebird and Promisify](#bluebird-and-promisify)
+  - [Examples](#examples)
+    - [Promise](#promise)
+    - [Callback](#callback)
+    - [Fallback](#fallback)
+    - [Health check](#health-check)
+    - [Sub Circuits](#sub-circuits)
+    - [Demonstration](#demonstration)
+  - [Methods](#methods)
+  - [Events](#events)
+  - [Configuration](#configuration)
+  - [Stats](#stats)
+  - [Hystrix Dashboard](#hystrix-dashboard)
+  - [Development](#development)
+  - [Change Log](#change-log)
 
 ### Bluebird and Promisify
 
@@ -161,11 +163,11 @@ Brakes is a circuit breaker library for Node. A circuit breaker provides latency
     });
 ```
 
-### Slave Circuits
+### Sub Circuits
 
-Brakes exposes the ability to create a master `Brakes instance` that can then contain slaveCircuits that all report to a central stats object. This allows all slaveCircuits to be tripped at the same time when the overall health of all the slaveCircuits crosses a defined threshold.
+Brakes exposes the ability to create a main `Brakes instance` that can then contain subCircuits that all report to a central stats object. This allows all subCircuits to be tripped at the same time when the overall health of all the subCircuits crosses a defined threshold.
 
-See `examples/slave-circuit.js` for a more complete example.
+See `examples/sub-circuit.js` for a more complete example.
 
 ```javascript
 function promiseCall(foo){
@@ -180,10 +182,10 @@ const brake = new Brakes({
   fallback: () => Promise.resolve('Response from fallback'),
 });
 
-const slaveCircuit1 = brake.slaveCircuit(promiseCall);
-const slaveCircuit2 = brake.slaveCircuit(promiseCall);
+const subCircuit1 = brake.subCircuit(promiseCall);
+const subCircuit2 = brake.subCircuit(promiseCall);
 
-slaveCircuit1.exec('bar')
+subCircuit1.exec('bar')
   .then((result) =>{
     console.log(`result: ${result}`);
   })
@@ -215,8 +217,8 @@ For a terminal based demonstration:
 **Hystrix Stream Demo**
 `npm install && node examples/hystrix-example.js`
 
-**Slave Circuits**
-`npm install && node examples/slave-circuit.js`
+**Sub Circuits**
+`npm install && node examples/sub-circuit.js`
 
 ## Methods
 Method | Argument(s) | Returns | Description
@@ -226,7 +228,7 @@ getGlobalStats|N/A| globalStats| Returns a reference to the global stats tracker
 exec|N/A|Promise|Executes the circuit
 fallback|function (must return promise or accept callback)|N/A|Registers a fallback function for the circuit
 healthCheck|function (must return promise or accept callback)|N/A|Registers a health check function for the circuit
-slaveCircuit|function (required), function (optional), opts (optional)|N/A| Create a new slave circuit that rolls up into the main circuit it is created under.
+subCircuit|function (required), function (optional), opts (optional)|N/A| Create a new sub circuit that rolls up into the main circuit it is created under.
 on|eventName, function|N/A|Register an event listener
 destroy|N/A|N/A|Removes all listeners and deregisters with global stats tracker.
 isOpen|N/A|boolean|Returns `true` if circuit is open

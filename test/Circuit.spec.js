@@ -172,21 +172,21 @@ describe('Circuit Class', () => {
       expect(result).to.equal('test');
     });
   });
-  it('Should call master fallback when circuit open if used in a slave context', () => {
+  it('Should call main fallback when circuit open if used in a sub context', () => {
     brake = new Brakes({
       fallback: () => Promise.resolve('fallback')
     });
-    const circuit = brake.slaveCircuit(nopr);
+    const circuit = brake.subCircuit(nopr);
     brake._circuitOpen = true;
     return circuit.exec('test').then(result => {
       expect(result).to.equal('fallback');
     });
   });
-  it('Should call master fallback when request fails if used in a slave context', () => {
+  it('Should call main fallback when request fails if used in a sub context', () => {
     brake = new Brakes({
       fallback: () => Promise.resolve('fallback')
     });
-    const circuit = brake.slaveCircuit(nopr);
+    const circuit = brake.subCircuit(nopr);
     return circuit.exec(undefined, 'test').then(result => {
       expect(result).to.equal('fallback');
     });
