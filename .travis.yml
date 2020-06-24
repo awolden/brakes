@@ -1,9 +1,10 @@
 language: node_js
 node_js:
-  - 4.2
   - 4
   - 6
   - 8
+  - 10
+  - 12
 script:
   - npm run test:lint && npm run coverage
 after_script:
