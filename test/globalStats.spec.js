@@ -44,6 +44,14 @@ describe('globalStats', () => {
     expect(instance.removeListener.firstCall.args[1]).to.be.a('function');
   });
 
+  it('_globalListener() should skip if not object', () => {
+    const data = '';
+    const stub = sinon.stub(globalStats._rawStream, 'push').callsFake(() => true);
+    globalStats._globalListener(data);
+    expect(stub.calledOnce).to.equal(false);
+    globalStats._rawStream.push.restore();
+  });
+
   it('_globalListener() should push to rawStream', () => {
     const data = {
       foo: 'bar'
@@ -53,6 +61,21 @@ describe('globalStats', () => {
     expect(stub.calledOnce).to.equal(true);
     expect(stub.firstCall.args[0]).to.equal(JSON.stringify(data));
     globalStats._rawStream.push.restore();
+  });
+
+  it('_globalListener() should push to rawStream if paused but readableFlowing', () => {
+    const data = {
+      foo: 'bar'
+    };
+    globalStats._rawStream.readableFlowing = true;
+    const stub = sinon.stub(globalStats._rawStream, 'push').callsFake(() => true);
+    const pausedStub = sinon.stub(globalStats._rawStream, 'isPaused').callsFake(() => true);
+    globalStats._globalListener(data);
+    expect(stub.calledOnce).to.equal(true);
+    expect(pausedStub.calledOnce).to.equal(true);
+    expect(stub.firstCall.args[0]).to.equal(JSON.stringify(data));
+    globalStats._rawStream.push.restore();
+    globalStats._rawStream.isPaused.restore();
   });
 
   it('_transformToHysterix() should transform to hysterix', done => {
