@@ -5,6 +5,7 @@ node_js:
   - 8
   - 10
   - 12
+  - 14
 script:
   - npm run test:lint && npm run coverage
 after_script:
